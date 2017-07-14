@@ -1,0 +1,68 @@
+<h2>Results summary for Tophat Cufflink and Cuffdiff workflow</h2>
+If you download the whole gzipped file (e.g. jobid.tar.gz), please unpack it with command such as
+"tar xvzf jobid.tar.gz", this will extract all the computed results in your current
+directory, following are the files and directories you may see:
+
+NGS-config
+    Configuration file and parameters
+
+NGS-samples
+    List of samples
+
+NGS-env
+    Environmental variables from the server where the jobs are executed
+
+Sample_name
+    This is a directory where results for this sample are stored.
+    This directory can have several sub-directories with results from
+    individual tools (e.g. tophat, cufflinks).
+    Within each sub-directory (.e.g. tophat), all necessary results
+    can be found. For example with tophat:
+        accepted_hits.bam: mapping results
+        align_summary.txt: mapping summary
+        deletions.bed
+        insertions.bed
+        junctions.bed
+        logs
+        prep_reads.info
+        unmapped.bam
+    within cufflink:
+        genes.fpkm_tracking
+        isoforms.fpkm_tracking
+        transcripts.gtf
+
+Merged_transcripts_from_all_samples
+    Merged transcripts by cuffmerge from transcripts from all samples
+        cuffmerge/merged.gtf
+
+Group1_vs_Group2 (or Group1_vs_Group3 etc)
+    cuffdiff results between samples of group1 and 2
+        cuffdiff/bias_params.info
+        cuffdiff/cds.count_tracking
+        cuffdiff/cds.diff
+    *   cuffdiff/cds_exp.diff: differential analysis on cds level
+        cuffdiff/cds.fpkm_tracking
+        cuffdiff/cds.read_group_tracking
+    *   cuffdiff/gene_exp.diff: differential analysis on genes level
+        cuffdiff/genes.count_tracking
+        cuffdiff/genes.fpkm_tracking
+        cuffdiff/genes.read_group_tracking
+    *   cuffdiff/isoform_exp.diff: differential analysis on isoforms level
+        cuffdiff/isoforms.count_tracking
+        cuffdiff/isoforms.fpkm_tracking
+        cuffdiff/isoforms.read_group_tracking
+        cuffdiff/promoters.diff
+        cuffdiff/read_groups.info
+        cuffdiff/run.info
+        cuffdiff/splicing.diff
+        cuffdiff/tss_group_exp.diff
+        cuffdiff/tss_groups.count_tracking
+        cuffdiff/tss_groups.fpkm_tracking
+        cuffdiff/tss_groups.read_group_tracking
+        cuffdiff/var_model.info
+
+WF-sh
+    This is a directory that stores the actual shell scripts, all the parameters
+    can be found here.
+
+* indicates the files that you may be most interested in.

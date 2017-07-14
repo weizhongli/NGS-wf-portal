@@ -1,0 +1,70 @@
+<tool id="trinity_SE" name="trinity SE reads" version="1.0.0">
+  <description>Trinity assembly for SE reads</description>
+  <command>
+/home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-galaxy-run.pl NGS-config qc-trinity-se $output;
+  </command>
+  <inputs>
+    <param name="ref_file" type="select" label="Please select a reference genome">
+      <options from_data_table="bowtie2_indexes_trinity">
+        <filter type="sort_by" column="2" />
+      </options>
+    </param>
+    <repeat name="group1" title="FASTQ file for sample" max="20" default="1" help="You can add up to 20 samples">
+        <param name="groups" type="select" label="You can assign sample into groups, e.g. group 1 as case and group 2 as control, we support up to 4 groups">
+          <option value="Group1">group 1</option>
+          <option value="Group2">group 2</option>
+          <option value="Group3">group 3</option>
+          <option value="Group4">group 4</option>
+        </param>
+
+        <param name="group1_name" size="40" type="text" label="Please enter a unique sample ID" optional="false"/>
+        <param name="group1_inputR1" type="data" format="fastq" label="Fastq file R1"/>
+    </repeat>
+
+  </inputs>
+
+  <configfiles>
+    <configfile name="config_f" filename="NGS-config">
+Read SE
+Reference $ref_file.fields.path
+Samples
+#for $i, $s in enumerate( $group1)
+${s.groups} ${s.group1_inputR1.file_name}                               ${s.group1_name}
+#end for
+    </configfile>
+  </configfiles>
+
+  <outputs>
+    <data name="output"        format="html" label="workflow output" from_work_dir="job.html" />
+  </outputs>
+
+  <stdio>
+    <regex match="error" source='stderr' level='fatal' />
+  </stdio>
+
+  <help>
+Summary:
+This workflow runs Trinity for two group of samples. It first assembles the reads pooled from
+all the input samples into transcriptome, then it aligns the reads from each individual sample
+to the assembled transcriptome with bowtie and perform Post-assembly Transcriptome Analysis using RSEM.
+
+More information about the protocol are described at http://trinityrnaseq.github.io
+
+Each group can have multiple samples. The input must be paired ended (PE) fastq files for each sample.
+
+Input:
+    1. SE fastq file (1 file) for each sample
+       click "add new Group1 / 2" to add sample to the group
+    2. select the reference genome
+
+Output:
+    1. Trinity.fasta: assembled transcriptome by Trinity
+    2. RSEM.genes.results, RSEM.isoforms.results: gene and isoform abundance calculated by RSEM
+    3. bowtie.bam alignment between sample and assembled transcriptome
+  </help>
+
+  <citations>
+    <citation type="doi">10.1038/nprot.2013.084</citation>
+  </citations>
+
+</tool>

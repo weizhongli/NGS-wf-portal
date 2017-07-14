@@ -1,0 +1,55 @@
+# bowtie2_indices.loc.sample
+# This is a *.loc.sample file distributed with Galaxy that enables tools
+# to use a directory of indexed gordon-data files. This one is for Bowtie2 and Tophat2.
+# See the wiki: http://wiki.galaxyproject.org/Admin/NGS%20Local%20Setup
+# First create these gordon-data files and save them in your own gordon-data directory structure.
+# Then, create a bowtie_indices.loc file to use those indexes with tools.
+# Copy this file, save it with the same name (minus the .sample), 
+# follow the format examples, and store the result in this directory.
+# The file should include an one line entry for each index set.
+# The path points to the "basename" for the set, not a specific file.
+# It has four text columns seperated by TABS.
+#
+# <unique_build_id>	<dbkey>	<display_name>	<file_base_path>
+#
+# So, for example, if you had hg18 indexes stored in:
+#
+#    /depot/gordon-data2/galaxy/hg19/bowtie2/
+#
+# containing hg19 genome and hg19.*.bt2 files, such as:
+#    -rw-rw-r-- 1 james   james   914M Feb 10 18:56 hg19canon.fa
+#    -rw-rw-r-- 1 james   james   914M Feb 10 18:56 hg19canon.1.bt2
+#    -rw-rw-r-- 1 james   james   683M Feb 10 18:56 hg19canon.2.bt2
+#    -rw-rw-r-- 1 james   james   3.3K Feb 10 16:54 hg19canon.3.bt2
+#    -rw-rw-r-- 1 james   james   683M Feb 10 16:54 hg19canon.4.bt2
+#    -rw-rw-r-- 1 james   james   914M Feb 10 20:45 hg19canon.rev.1.bt2
+#    -rw-rw-r-- 1 james   james   683M Feb 10 20:45 hg19canon.rev.2.bt2
+#
+# then the bowtie2_indices.loc entry could look like this:
+#
+#hg19	hg19	Human (hg19)	/depot/gordon-data2/galaxy/hg19/bowtie2/hg19canon
+#hg38a	hg38a	Human (hg38 copy)	/home/oasis/gordon-data/NGS-ann-project-new/refs/human/human
+#hg38	hg38	Human (hg38)	/home/oasis/gordon-data/NGS-ann-project-new/refs/human/human
+hg38    hg38    Human (GRCh38.85)       /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/human
+mouse   mouse   Mouse (GRCh38.85)       /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/mouse
+cow     cow     Cow (UMD3.1.85) /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/cow
+chicken chicken Chicken (Galgal4.85)    /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/chicken
+duck    duck    Duck (BGI_duck_1.0.85)  /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/duck
+horse   horse   Horse (EquCab2.85)      /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/horse
+pig     pig     Pig (Sscrofa10.2.85)    /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/pig
+rabbit  rabbit  Rabbit (OryCun2.0.85)   /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/rabbit
+sheep   sheep   Sheep (Oar_v3.1.85)     /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/sheep
+turkey  turkey  Turkey (UMD2.85)        /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/turkey
+c.elegan        c.elegan        C.elegan (WBcel235.85)  /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/c.elegan
+yeast   yeast   Yeast (R64-1-1.85)      /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/yeast
+goat    goat    Goat (FG_V1.1)  /home/oasis/gordon-data/NGS-ann-project-new/refs/goat.kiz.ac.cn/goat
+fruitfly        fruitfly        Drosophila_melanogaster (BDGP6.79.85)   /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/fruitfly
+zebrafish       zebrafish       Danio_rerio (GRCz10.85) /home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/zebrafish
+rat	rat	Rat(Rnor_6.0)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/rat
+#
+#More examples:
+#
+#mm10	mm10	Mouse (mm10)	/depot/gordon-data2/galaxy/mm10/bowtie2/mm10
+#dm3	dm3		D. melanogaster (dm3)	/depot/gordon-data2/galaxy/mm10/bowtie2/dm3
+#
+#

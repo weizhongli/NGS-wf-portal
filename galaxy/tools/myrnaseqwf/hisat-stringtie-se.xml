@@ -1,0 +1,88 @@
+<tool id="hisat_SE" name="hisat SE reads" version="1.0.0">
+  <description>Hisat mapping, stringtie and ballgown analysis for groups of samples, SE reads</description>
+  <command>
+/home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-galaxy-run-yuan.pl NGS-config qc-hisat-stringtie-se $output
+  </command>
+  <inputs>
+    <param name="ref_file" type="select" label="Please select a reference genome">
+      <options from_data_table="hisat2_indexes">
+        <filter type="sort_by" column="2" />
+      </options>
+    </param>
+    <repeat name="group1" title="FASTQ file for sample" max="20" default="1" help="You can add up to 20 samples">
+        <param name="groups" type="select" label="You can assign sample into groups, e.g. group 1 as case and group 2 as control, we support up to 4 groups">
+          <option value="Group1">group 1</option>
+          <option value="Group2">group 2</option>
+          <option value="Group3">group 3</option>
+          <option value="Group4">group 4</option>
+        </param>
+
+        <param name="group1_name" size="40" type="text" label="Please enter a unique sample ID" optional="false"/>
+        <param name="group1_inputR1" type="data" format="fastq" label="Fastq file R1"/>
+    </repeat>
+
+  </inputs>
+
+  <configfiles>
+    <configfile name="config_f" filename="NGS-config">
+Read PE
+Reference $ref_file.fields.path
+Samples
+#for $i, $s in enumerate( $group1)
+${s.groups} ${s.group1_inputR1.file_name}                               ${s.group1_name}
+#end for
+    </configfile>
+  </configfiles>
+
+  <outputs>
+    <data name="output"        format="html" label="workflow output" from_work_dir="job.html" />
+  </outputs>
+
+  <stdio>
+    <regex match="error" source='stderr' level='fatal' />
+  </stdio>
+
+  <help>
+Summary:
+This workflow runs hisat reads mapping for up to 4 groups of samples,
+merge the assembled with stringtie, and finally compare the groups pairwisely with ballgown in r.
+This protocol was described in Pertea et al. Transcript-level expression analysis of RNA-seq experiments
+with HISAT, StringTie and Ballgown. Nat Protoc. 2016 11: 1650–1667
+
+Each group can have multiple samples. The input must be single ended (SE) fastq file for each sample.
+
+For each sample, the workflow run the following process:
+    1. QC, the low quality reads will be removed and low quality bases will be trimmed
+    2. hisat, high quality reads will be mapped to the selected genome
+    3. sort and convert the sam files to bam by samtools
+    4. stringtie, assemble the transcripts
+
+For all the samples together, the workflow run:
+    1. stringtie, merge the transcripts
+
+For any pair of groups, the workflow run:
+    1. stringtie to estimate transcript abundances and create table counts for ballgown
+    2. ballgown in r, compare the transcripts between the two groups (e.g. case and control)
+
+Input:
+    1. select the reference genome
+    2. PE fastq files (2 files) for each sample
+       click "add new FASTQ file for sample" to add a new sample
+       select a group for the sample and give a unique sample name
+
+Output:
+    1. sam file for each sample from hisat, bam file from samtools
+    2. gtf for each sample, merged.gtf from stringtie
+    3. transcripts_results.csv, genes_results.csv from ballgown
+
+Important notice :
+    1. If you have no replicates in the experiment (i.e., you just have one sample / one replicate) you will not be able to do statistical analysis that requires estimating variance in ballgown, so you won't be able to use stattest and please try other pipeline.
+    2. You also need to add the index number into the sample names. For example, if you have 2 groups, and each group has 3 replicates. You'd better add 1_ as the prefix for the first sample in the first group, 2_ as the prefix for the second sample in the first group, 3_ for the third sample in the first group, 4_, 5_, 6_ as the prefix for the first, second, third sample in the second group.
+    3. This workflow is still in testing process. Please feel free to contact us for any comments or suggestions.
+  </help>
+
+  <citations>
+    <citation type="doi">10.1038/nprot.2016.095</citation>
+  </citations>
+
+</tool>

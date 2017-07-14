@@ -1,0 +1,80 @@
+<p class="header4">NGS-config</p>
+<div class="sub">
+  <p>Configuration file and parameters</p>
+</div>
+
+<p class="header4">NGS-samples</p>
+<div class="sub">
+  <p>List of samples</p>
+</div>
+
+<p class="header4">NGS-env</p>
+<div class="sub">
+  <p>Environmental variables from the server where the jobs are executed</p>
+</div>
+
+<p class="header4">Sample_name</p>
+<div class="sub">
+  <p>This is a directory where results for this sample are stored.</p>
+  <p>This directory can have several sub-directories with results from individual tools (e.g. <b>tophat</b>, <b>cufflinks</b>).</p>
+  <p>Within each sub-directory (.e.g. tophat), all necessary results can be found. For example with <b>tophat</b>:</p>
+  <div class="sub">
+    <p>accepted_hits.bam: mapping results<br>
+       align_summary.txt: mapping summary<br>
+       deletions.bed<br>
+       insertions.bed<br>
+       junctions.bed<br>
+       logs<br>
+       prep_reads.info<br>
+       unmapped.bam</p>
+  </div>
+  <p>Within cufflink:</p>
+  <div class="sub">
+    <p>genes.fpkm_tracking<br>
+       isoforms.fpkm_tracking<br>
+       transcripts.gtf<p>
+  </div>
+</div>
+
+<p class="header4">Merged_transcripts_from_all_samples</p>
+<div class="sub">
+  <p>Merged transcripts by <b>cuffmerge</b> from transcripts from all samples</p>
+  <div class="sub">
+    <p>merged.gtf</p>
+  </div>
+</div>
+
+<p class="header4">Group1_vs_Group2 (or Group1_vs_Group3 etc)</p>
+<div class="sub">
+  <p><b>cuffdiff</b> results between samples of group 1 and 2</p>
+  <div class="sub">
+  <p>bias_params.info<br>
+     cds.count_tracking<br>
+     cds.diff<br>
+     cds_exp.diff<br>
+     cds.fpkm_tracking<br>
+     cds.read_group_tracking<br>
+     gene_exp.diff<br>
+     genes.count_tracking<br>
+     genes.fpkm_tracking<br>
+     genes.read_group_tracking<br>
+     isoform_exp.diff<br>
+     isoforms.count_tracking<br>
+     isoforms.fpkm_tracking<br>
+     isoforms.read_group_tracking<br>
+     promoters.diff<br>
+     read_groups.info<br>
+     run.info<br>
+     splicing.diff<br>
+     tss_group_exp.diff<br>
+     tss_groups.count_tracking<br>
+     tss_groups.fpkm_tracking<br>
+     tss_groups.read_group_tracking<br>
+     var_model.info</p>
+  </div>
+</div>
+
+<p class="header4">WF-sh</p>
+<div class="sub">
+  <p>This is a directory that stores the actual shell scripts, all the parameters can be found here.</p>
+</div>

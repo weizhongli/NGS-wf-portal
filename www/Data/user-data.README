@@ -1,0 +1,2 @@
+user-data can be a directory, but it is better 
+to be symbolic link to a directory on large disk to hold workflow results.

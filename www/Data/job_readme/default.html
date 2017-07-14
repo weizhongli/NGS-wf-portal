@@ -1,0 +1,40 @@
+<PRE>
+If you downloading the whole gzipped file (e.g. jobid.tar.gz), please unpack it with command such as
+"tar xvzf jobid.tar.gz", this will extract all the computed results in your current
+directory, following are the file and directory list you may see:
+
+NGS-config
+    Configuration file and parameters
+
+NGS-samples
+    List of samples users selected to run with this workflow
+
+NGS-env
+    Environmental variables from the server where the jobs are executed
+
+Sample_<n>
+    Here n is a number, corrsponding to the samples in NGS-samples file.
+    This is a directory that results for this sample are stored.
+    This directory can have several sub-directories with results from
+    individual tools (e.g. tophat, cufflinks).
+    Within each sub-directory (.e.g. tophat), all necessary results
+    can be found. For example with tophat:
+        accepted_hits.bam
+        align_summary.txt
+        deletions.bed
+        insertions.bed
+        junctions.bed
+        logs
+        prep_reads.info
+        unmapped.bam
+
+Sample_<job_name>
+    Here job_name is self explanatory, the job is an analysis on all the samples or group of samples.
+    This is a directory that stores all the results for the analysis. For example
+    Sample_diff_group1_n_group2 is the cuffdiff results between your two groups of samples.
+
+WF-sh
+    This is a directory that stores the actual shell scripts, all the parameters
+    can be found here.
+</PRE>
+

@@ -1,0 +1,73 @@
+<h2>Results summary for CD-HIT-OTU-MiSeq</h2>
+If you download the whole gzipped file (e.g. jobid.tar.gz), please unpack it with command such as
+"tar xvzf jobid.tar.gz", this will extract all the computed results in your current
+directory, following are the files and directories you may see:
+
+NGS-samples
+    List of samples 
+
+NGS-env
+    Environmental variables from the server where the jobs were executed
+
+gg_13_5-PE99.150-100.clstr
+gg_13_5-PE99.150-100-consensus.R1
+gg_13_5-PE99.150-100-consensus.R2
+gg_13_5-PE99.150-100-R1
+gg_13_5-PE99.150-100-R1.6202.log
+gg_13_5-PE99.150-100-R2
+    These files are spliced reference database from Greengene
+
+Sample_Name
+    This is a directory where results for this sample are stored. There are
+    two folders: qc and otu. 
+    qc folder has high quality reads and output from Trimmomatic
+        Sample_Name/qc/qc.stderr
+        Sample_Name/qc/qc.stdout
+        Sample_Name/qc/R1.fa
+        Sample_Name/qc/R2.fa
+   otu dir has OTU cluster and other intermediat files 
+        Sample_Name/otu/chimeric-small-clusters-list.txt
+        Sample_Name/otu/OTU.clstr
+        Sample_Name/otu/seq.97
+        Sample_Name/otu/seq.97.2
+        Sample_Name/otu/seq.97-all.clstr
+        Sample_Name/otu/seq.97.clstr
+        Sample_Name/otu/seq.97.log
+        Sample_Name/otu/seq.97.ref.clstr
+        Sample_Name/otu/seq.97.reftop.clstr
+        Sample_Name/otu/seq.99
+        Sample_Name/otu/seq.99.2
+        Sample_Name/otu/seq.99.clstr
+        Sample_Name/otu/seq.99f
+        Sample_Name/otu/seq.99f.2
+        Sample_Name/otu/seq.99f-all.clstr
+        Sample_Name/otu/seq.99f.clstr
+        Sample_Name/otu/seq.99.log
+        Sample_Name/otu/seq.chimeric-clstr.R1.clstr
+        Sample_Name/otu/seq.chimeric-clstr.R2.clstr
+        Sample_Name/otu/seq.nr
+        Sample_Name/otu/seq.nr.2
+        Sample_Name/otu/seq.nr.clstr
+        Sample_Name/otu/seq.nr.log
+
+Sample_pooled
+    This folder has final OTU clusters and table of all samples
+        Sample_pooled/chimeric-small-clusters-list.txt
+   *    Sample_pooled/OTU.clstr
+   *    Sample_pooled/OTU.txt
+        Sample_pooled/seq.97
+        Sample_pooled/seq.97.2
+        Sample_pooled/seq.97-all.clstr
+        Sample_pooled/seq.97.clstr
+        Sample_pooled/seq.97.log
+        Sample_pooled/seq.97.ref.clstr
+        Sample_pooled/seq.97.reftop.clstr
+        Sample_pooled/seq.99f
+        Sample_pooled/seq.99f.2
+        Sample_pooled/seq.99f-all.clstr
+
+WF-sh
+    This is a directory that stores the actual shell scripts, all the parameters
+    can be found here.
+
+* indicated the files that you may be most interested in.
