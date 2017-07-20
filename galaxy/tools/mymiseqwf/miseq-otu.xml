@@ -1,9 +1,27 @@
 <tool id="CD-HIT-OTU-MiSeq" name="CD-HIT-OTU-MiSeq" version="1.0.0">
   <description>CD-HIT-OTU-MiSeq for paired end fastq files</description>
   <command>
-cd ..; /home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl NGS-samples $output
+cd ..; /home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl NGS-samples $output $R1_len $R2_len $abs $cutoff
   </command>
   <inputs>
+    <param name="R1_len" type="integer" value="150" label="Effective read length for R1 read"/>
+    <param name="R2_len" type="integer" value="100" label="Effective read length for R2 read"/>
+    <param name="cutoff" type="select" label="OTU clustering cutoff">
+       <option value="0.95">0.95</option>
+       <option value="0.96">0.96</option>
+       <option value="0.97" selected="True">0.97</option>
+       <option value="0.98">0.98</option>
+       <option value="0.99">0.99</option>
+    </param>
+    <param name="abs" type="select" label="Abundance cutoff">
+       <option value="0.0001" selected="True">0.0001</option>
+       <option value="0.0002">0.0002</option>
+       <option value="0.0005">0.0005</option>
+       <option value="0.001">0.001</option>
+       <option value="0.002">0.002</option>
+       <option value="0.005">0.005</option>
+    </param>
+
     <repeat name="group1" title="FASTQ file for sample" max="20" default="1" help="You can add up to 20 samples">
         <param name="group1_name" size="40" type="text" label="Please enter a unique sample ID" optional="false"/>
         <param name="group1_inputR1" type="data" format="fastq" label="Fastq file R1"/>

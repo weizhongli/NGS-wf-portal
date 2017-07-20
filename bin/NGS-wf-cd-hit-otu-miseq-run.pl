@@ -19,6 +19,10 @@ use POSIX;
 
 my $sample_file = shift;
 my $galaxy_output = shift;
+my $R1_len = shift; $R1_len = 150 unless ($R1_len > 50);
+my $R2_len = shift; $R2_len = 100 unless ($R2_len > 50);
+my $abs = shift;    $abs = 0.0001 unless ($abs >= 0);
+my $cutoff = shift; $cutoff = 0.97 unless ($cutoff > 0.9);
 
 my $job_work_dir  = `pwd`; chop($job_work_dir);
 my ($i, $j, $k, $ll, $cmd);
@@ -55,15 +59,16 @@ if (1) {
   my ($t_sample, $t_R1, $t_R2) = split(/\s+/, $cmd);
 
   #### prepare sliced ref
-  qsub_n_wait("$cdhit_path/usecases/Miseq-16S/16S-ref-db-PE-splice.pl -i $t_R1 -j $t_R2  -d $gg_path -o gg_13_5-PE99.150-100 -p 150 -q 100 -c 0.99", 4);
-  my $gg_R1 = "$pwd/gg_13_5-PE99.150-100-R1";
-  my $gg_R2 = "$pwd/gg_13_5-PE99.150-100-R2";
+  my $gg_name = "Green-Gene-spliced-ref";
+  qsub_n_wait("$cdhit_path/usecases/Miseq-16S/16S-ref-db-PE-splice.pl -i $t_R1 -j $t_R2  -d $gg_path -o $gg_name -p $R1_len -q $R2_len -c 0.99", 4);
+  my $gg_R1 = "$pwd/$gg_name-R1";
+  my $gg_R2 = "$pwd/$gg_name-R2";
 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -s $sample_file -j otu -T otu:150:100:0.97:0.0001:$gg_R1:$gg_R2:75`;
+  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -s $sample_file -j otu -T otu:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
   $cmd = `$cdhit_path/usecases/Miseq-16S/pool_samples.pl -s $sample_file -o Sample_pooled`; 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -S Sample_pooled -j otu-pooled -T otu-pooled:150:100:0.97:0.0001:$gg_R1:$gg_R2:75`;
+  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
 
-  $files_to_save = "NGS* gg* Sample* WF-sh";
+  $files_to_save = "NGS* Green* Sample* WF-sh";
 }
 else {
   exit;
