@@ -135,6 +135,10 @@ $samples = array();  // (indexed => associative): name, left/right, group
       require("user-data/miseq/$jobid/note.html");
     }
     
+    print "<p class='header3'>Result summary, OTU Table</p>"."\n";
+    require("job_report/miseq.php");
+    print "<hr>"."\n";
+
     // output files
     $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/miseq";
     $file = "$www_file_url/$jobid/$jobid.tar.gz";
