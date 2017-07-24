@@ -1,5 +1,5 @@
 <?php
-//  require("../includes/jcvi_miseq_header.php");
+  require("../includes/jcvi_miseq_header.php");
 ?>
 
 <div id="middle_content_template">
@@ -165,6 +165,6 @@ $samples = array();  // (indexed => associative): name, left/right, group
 </p>
 
 <?php
-//  require("../includes/jcvi_footer.php");
+  require("../includes/jcvi_footer.php");
 ?>
 
