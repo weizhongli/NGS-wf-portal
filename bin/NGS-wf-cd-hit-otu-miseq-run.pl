@@ -49,7 +49,7 @@ my $files_to_save = "NGS* Sample* WF-sh"; #### a list of files to tar or to stor
 my $pwd = `pwd`; $pwd =~ s/\n//g;
 
 $cmd = `env > NGS-env`;
-$cmd = `grep -P "\w" $sample_file > $sample_file.1`;
+$cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
 $cmd = `mv -f $sample_file.1 $sample_file`;
 $cmd = `sed -i "s/^/Sample_/" $sample_file`;
 
