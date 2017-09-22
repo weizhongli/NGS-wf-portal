@@ -35,28 +35,6 @@
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/bwa_index_color.loc" />
     </table>
-    <!-- Locations of indexes in the bowtie2 mapper format -->
-    <table name="bowtie2_indexes" comment_char="#">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/bowtie2_indices.loc" />
-    </table>
-    <table name="tophat2_indexes" comment_char="#">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/tophat2_indices.loc" />
-    </table>
-    <table name="bowtie2_indexes_trinity" comment_char="#">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/bowtie2_indices_trinity.loc" />
-    </table>
-    <table name="tophat2_indexes_trinity" comment_char="#">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/tophat2_indices_trinity.loc" />
-    </table>
-    <!-- Locations of indexes in the hisat2 mapper format -->
-    <table name="hisat2_indexes" comment_char="#">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/hisat2_indices.loc" />
-    </table>
     <!-- Locations of MAF files that have been indexed with bx-python -->
     <table name="indexed_maf_files">
         <columns>name, value, dbkey, species</columns>
@@ -122,4 +100,28 @@
         <columns>value, name, url</columns>
         <file path="tool-data/biom_simple_display.loc" />
     </table>
+    <!-- added for RNA-seq portal -->
+    <!-- Locations of indexes in the bowtie2 mapper format -->
+    <table name="bowtie2_indexes" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/bowtie2_indices.loc" />
+    </table>
+    <!-- mask other old workflow 
+    <table name="tophat2_indexes" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/tophat2_indices.loc" />
+    </table>
+    <table name="bowtie2_indexes_trinity" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/bowtie2_indices_trinity.loc" />
+    </table>
+    <table name="tophat2_indexes_trinity" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/tophat2_indices_trinity.loc" />
+    </table>
+    <table name="hisat2_indexes" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/hisat2_indices.loc" />
+    </table>
+    -->
 </tables>

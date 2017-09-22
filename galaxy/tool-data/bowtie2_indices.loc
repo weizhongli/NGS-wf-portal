@@ -27,20 +27,14 @@
 #
 # then the bowtie2_indices.loc entry could look like this:
 #
-#hg38	hg38	Human (hg38)	/home/oasis/gordon-data/NGS-ann-project-new/refs/human/human
-hg38	hg38	Human (GRCh38.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/human
-mouse	mouse	Mouse (GRCh38.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/mouse
-cow	cow	Cow (UMD3.1.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/cow
-chicken	chicken	Chicken (Galgal4.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/chicken
-duck	duck	Duck (BGI_duck_1.0.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/duck
-horse	horse	Horse (EquCab2.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/horse
-pig	pig	Pig (Sscrofa10.2.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/pig
-rabbit	rabbit	Rabbit (OryCun2.0.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/rabbit
-sheep	sheep	Sheep (Oar_v3.1.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/sheep
-turkey	turkey	Turkey (UMD2.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/turkey
-c.elegan	c.elegan	C.elegan (WBcel235.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/c.elegan
-yeast	yeast	Yeast (R64-1-1.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/yeast
-goat	goat	Goat (FG_V1.1)	/home/oasis/gordon-data/NGS-ann-project-new/refs/goat.kiz.ac.cn/goat
-fruitfly	fruitfly	Drosophila_melanogaster (BDGP6.79.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/fruitfly
-zebrafish	zebrafish	Danio_rerio (GRCz10.85)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/zebrafish
-rat	rat	Rat(Rnor_6.0)	/home/oasis/gordon-data/NGS-ann-project-new/refs/ensembl-genomes/rat
+#hg38	hg38	Human (hg38)	/home/oasis/gordon-data/NGS-ann-project/refs/human/human
+hg38	hg38	Human (GRCh38.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/human
+mouse	mouse	Mouse (GRCh38.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/mouse
+cow	cow	Cow (UMD3.1.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/cow
+pig	pig	Pig (Sscrofa10.2.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/pig
+sheep	sheep	Sheep (Oar_v3.1.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/sheep
+c.elegan	c.elegan	C.elegan (WBcel235.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/c.elegan
+yeast	yeast	Yeast (R64-1-1.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/yeast
+fruitfly	fruitfly	Drosophila_melanogaster (BDGP6.79.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/fruitfly
+zebrafish	zebrafish	Danio_rerio (GRCz10.85)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/zebrafish
+rat	rat	Rat(Rnor_6.0)	/home/oasis/gordon-data/NGS-ann-project/refs/ensembl-genomes/rat
