@@ -1,6 +1,6 @@
 <?php
   $vss = array();  // comparisons between groups
-  $files = scandir("user-data/$jobid");
+  $files = scandir("user-data/RNAseq/$jobid");
   sort($files);
   foreach ($files as $file) {
     if (substr($file, 0, 5) === "Group") {
@@ -12,11 +12,11 @@
   $fts = array();  // features (cds, gene, promoter, splicing, etc)
   foreach ($vss as $vs) {
     $g = explode("-", $vs);
-    $files = scandir("user-data/$jobid/Group".$g[0]."_vs_Group".$g[1]."/cuffdiff");
+    $files = scandir("user-data/RNAseq/$jobid/Group".$g[0]."_vs_Group".$g[1]."/cuffdiff");
     foreach ($files as $file) {
       if (substr($file, -13) === "gene_exp.diff") { // only shows gene_exp.diff by Yuan
         $fttype = substr($file, 0, strlen($file)-5);
-        $f = fopen("user-data/$jobid/Group".$g[0]."_vs_Group".$g[1]."/cuffdiff/".$file, "r");
+        $f = fopen("user-data/RNAseq/$jobid/Group".$g[0]."_vs_Group".$g[1]."/cuffdiff/".$file, "r");
         $read_in = 0;
         while (!feof($f)) {
           $line = trim(fgets($f));

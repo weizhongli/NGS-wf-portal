@@ -15,7 +15,7 @@
     "Average contig" => "mean",
     "Total assembled bases" => "total"
   );
-  $file = "user-data/$jobid/Trinity_assembly_from_pooled_samples/trinity-pe/Trinity-stat.txt";
+  $file = "user-data/RNAseq/$jobid/Trinity_assembly_from_pooled_samples/trinity-pe/Trinity-stat.txt";
   $f = fopen($file, "r") or die ("<p>Cannot read " + basename($file) + ".</p>\n");
   $section = 0;
   while (!feof($f)) {

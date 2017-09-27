@@ -15,7 +15,7 @@
   foreach ($samples as $sample) {
     $stats = array("name" => $sample["name"]);
     $filename = str_replace("-", "_", $sample["name"]);
-    $f = fopen("user-data/$jobid/Sample_".$filename."/qc-star-".$readtype."-2nd-pass/starLog.final.out", "r");
+    $f = fopen("user-data/RNAseq/$jobid/Sample_".$filename."/qc-star-".$readtype."-2nd-pass/starLog.final.out", "r");
     while (!feof($f)) {
       $line = trim(fgets($f));
       if ($line === "") continue;

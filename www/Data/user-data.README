@@ -1,2 +1,11 @@
-user-data can be a directory, but it is better 
-to be symbolic link to a directory on large disk to hold workflow results.
+user-data is a symbolic link to the directory on large disk (e.g. /path_to_large_dist). 
+/path_to_large_dist is actual folder used by workflow to store results.
+within user-data, you should have subfolders RNAseq or miseq to store RNAseq workflow results
+or miseq workflow results.
+
+e.g. you have 
+     /path_to_large_disk/RNAseq
+     /path_to_large_dist/miseq
+
+ln -s /path_to_large_dist user-data
+

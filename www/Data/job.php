@@ -106,11 +106,11 @@ $idir = 1;  // current subdirectory level for tree structure visualization
 $jobid = $_GET['jobid'];
 
 // render page contents
-if (file_exists("user-data/$jobid/readme.html")) {
+if (file_exists("user-data/RNAseq/$jobid/readme.html")) {
 print "<p>Congratulations! Your job <b>".$jobid."</b> is completed.</p>"."\n";
-print "<p>You may download all workflow results by wget -r http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/$jobid. <br>\n";
+print "<p>You may download all workflow results by wget -r http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/RNAseq/$jobid. <br>\n";
 print "You can also browse the individual files, at bottom of the page. <br>\n";
-print "If this page takes long time to load, you can view the results with <A href=\"http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/$jobid/file-list.html\">this link. </A> <br>";
+print "If this page takes long time to load, you can view the results with <A href=\"/RNA-seq/Data/user-data/RNAseq/$jobid/file-list.html\">this link. </A> <br>";
 print "This server is getting popular, so we can not store big files for long time, old files older than 90 days will be deleted. </p>";
 print "<hr>"."\n";
 
@@ -120,12 +120,12 @@ $readtype = "NA";  // pe or se
 $reference = "NA";
 $samples = array();  // (indexed => associative): name, left/right, group
     $groups = array();  // (associative) group ID => sample names
-    if ($job_file = fopen("user-data/$jobid/NGS-job", "r")) {
+    if ($job_file = fopen("user-data/RNAseq/$jobid/NGS-job", "r")) {
       $line = trim(fgets($job_file));
       $readtype = substr($line, -2);
       $jobtype = substr($line, 3, strlen($line)-6);
     }
-    $f = fopen("user-data/$jobid/NGS-config", "r");
+    $f = fopen("user-data/RNAseq/$jobid/NGS-config", "r");
     while (!feof($f)) {
       $line = trim(fgets($f));
       if ($line === "") continue;
@@ -162,7 +162,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     if ($jobtype === "tophat-cufflink") {
       $dirname = "qc-".$jobtype."-".$readtype;
       for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
       if (!file_exists($filepath)) continue;
       $f = fopen($filepath, "r");
       while (!feof($f)) {
@@ -185,7 +185,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     } elseif ($jobtype === "trinity") {
       $dirname = "post-".$jobtype."-".$readtype;
         for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
       if (!file_exists($filepath)) continue;
       $f = fopen($filepath, "r");
       while (!feof($f)) {
@@ -208,7 +208,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     } elseif ($jobtype === "star") {
       $dirname = "qc-".$readtype;
       for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
       if (!file_exists($filepath)) continue;
       $f = fopen($filepath, "r");
       while (!feof($f)) {
@@ -231,7 +231,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     } elseif ($jobtype === "hisat-stringtie") {
       $dirname = "qc-".$jobtype."-".$readtype;
       for ($i = 0; $i < count($samples); $i ++) {
-        $filepath_1 = "user-data/$jobid/Sample_1_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        $filepath_1 = "user-data/RNAseq/$jobid/Sample_1_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
         if (!file_exists($filepath_1)) continue;
           $f = fopen($filepath_1, "r");
           while (!feof($f)) {
@@ -252,7 +252,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
         fclose($f);
       }
       for ($i = 0; $i < count($samples); $i ++) {
-        $filepath_2 = "user-data/$jobid/Sample_2_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        $filepath_2 = "user-data/RNAseq/$jobid/Sample_2_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
         if (!file_exists($filepath_2)) continue;
           $f = fopen($filepath_2, "r");
           while (!feof($f)) {
@@ -273,7 +273,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
         fclose($f);
       }
       for ($i = 0; $i < count($samples); $i ++) {
-        $filepath_3 = "user-data/$jobid/Sample_3_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        $filepath_3 = "user-data/RNAseq/$jobid/Sample_3_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
         if (!file_exists($filepath_3)) continue;
           $f = fopen($filepath_3, "r");
           while (!feof($f)) {
@@ -294,7 +294,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
         fclose($f);
       }
       for ($i = 0; $i < count($samples); $i ++) {
-        $filepath_4 = "user-data/$jobid/Sample_4_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        $filepath_4 = "user-data/RNAseq/$jobid/Sample_4_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
         if (!file_exists($filepath_4)) continue;
           $f = fopen($filepath_4, "r");
           while (!feof($f)) {
@@ -345,8 +345,8 @@ $samples = array();  // (indexed => associative): name, left/right, group
     if (file_exists("note.html")) {
       require("note.html");
     }
-    if (file_exists("user-data/$jobid/note.html")) {
-      require("user-data/$jobid/note.html");
+    if (file_exists("user-data/RNAseq/$jobid/note.html")) {
+      require("user-data/RNAseq/$jobid/note.html");
     } else {
       $has_results = 1;
       foreach ($samples as $sample) {
@@ -368,7 +368,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
 
     // instead of readme.html, now the script checks NGS-size for job completeness.
     $size = 0;
-    if ($job_file = fopen("user-data/$jobid/NGS-size", "r")) {
+    if ($job_file = fopen("user-data/RNAseq/$jobid/NGS-size", "r")) {
       $size = trim(fgets($job_file));
     }
     $size = humanFileSize($size);
@@ -377,8 +377,8 @@ $samples = array();  // (indexed => associative): name, left/right, group
 //    print "<p>You'd better also check the description of the output files below.</p>"."\n";
 //    print "<p><button onclick=\"location.href='$file';\">Download output files ($size)</button></p>"."\n";
     print "<p>Here, you may Browse the directory and files to view or download individual files.</p>"."\n";
-    process_this_dir("user-data/$jobid");
-    process_WF_dir("user-data/$jobid/WF-sh");
+    process_this_dir("user-data/RNAseq/$jobid");
+    process_WF_dir("user-data/RNAseq/$jobid/WF-sh");
     print "<p><button class='fold' onclick=\"if(this.innerHTML=='+'){document.getElementById('readme').style.display='block';this.innerHTML='-';}else{document.getElementById('readme').style.display='none';this.innerHTML='+';}\">+</button>Click to see the description of the output files.</p>"."\n";
     print "<div id='readme' class='sub' style='display:none'>"."\n";
     print "<pre style='font-size: 10pt'>";

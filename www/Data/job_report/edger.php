@@ -1,7 +1,7 @@
 <?php
 
   // DE genes and transcripts
-  $dir = "user-data/$jobid/Sample-all-transcript-matrix-group/post-RSEM-group";
+  $dir = "user-data/RNAseq/$jobid/Sample-all-transcript-matrix-group/post-RSEM-group";
   if (is_dir($dir)) {
     $file = $dir."/trans-diff/trans-diff.matrix";
     if (file_exists($file)) {
