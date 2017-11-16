@@ -64,9 +64,9 @@ if (1) {
   my $gg_R1 = "$pwd/$gg_name-R1";
   my $gg_R2 = "$pwd/$gg_name-R2";
 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -s $sample_file -j otu -T otu:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
+  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -s $sample_file -j otu -T otu:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
   $cmd = `$cdhit_path/usecases/Miseq-16S/pool_samples.pl -s $sample_file -o Sample_pooled`; 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.pl -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.pl -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
+  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
 
   $files_to_save = "NGS* Green* Sample* WF-sh";
 }
