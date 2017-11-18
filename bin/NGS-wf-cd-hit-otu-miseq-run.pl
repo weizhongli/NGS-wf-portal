@@ -64,9 +64,9 @@ if (1) {
   my $gg_R1 = "$pwd/$gg_name-R1";
   my $gg_R2 = "$pwd/$gg_name-R2";
 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -s $sample_file -j otu -T otu:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
-  $cmd = `$cdhit_path/usecases/Miseq-16S/pool_samples.pl -s $sample_file -o Sample_pooled`; 
-  $cmd = `$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75`;
+  nice_run("$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -s $sample_file -j otu -T otu:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75");
+  nice_run("$cdhit_path/usecases/Miseq-16S/pool_samples.pl -s $sample_file -o Sample_pooled"); 
+  nice_run("$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75");
 
   $files_to_save = "NGS* Green* Sample* WF-sh";
 }
@@ -116,10 +116,19 @@ chdir($job_work_dir);
 ################################################################################
 ################################################################################
 ################################################################################
+sub nice_run {
+  my $command  = shift;
+  print STDERR "running $command\n";
+  my $cmd = `$command`;
+}
+
 sub qsub_n_wait {
   my ($i, $j, $k, $ll, $cmd);
   my ($command, $pe_no) = @_;
   my $pwd = `pwd`; chop($pwd);
+
+  print STDERR "qsub following command on $pe_no cores\n$command\n";
+
   $cmd = `mkdir WF-sh` unless (-e "WF-sh");
 
   my $sh_f       = "$pwd/WF-sh/$$.$qsub_no.sh"; $qsub_no++;
