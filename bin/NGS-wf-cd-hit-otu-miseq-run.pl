@@ -23,6 +23,7 @@ my $R1_len = shift; $R1_len = 150 unless ($R1_len > 50);
 my $R2_len = shift; $R2_len = 100 unless ($R2_len > 50);
 my $abs = shift;    $abs = 0.0001 unless ($abs >= 0);
 my $cutoff = shift; $cutoff = 0.97 unless ($cutoff > 0.9);
+my $refdb = shift; $refdb = "greengene" unless ($refdb);
 
 my $job_work_dir  = `pwd`; chop($job_work_dir);
 my ($i, $j, $k, $ll, $cmd);
@@ -48,6 +49,9 @@ my $file_list_file = "file-list.html";
 my $files_to_save = "NGS* Sample* WF-sh"; #### a list of files to tar or to store
 my $pwd = `pwd`; $pwd =~ s/\n//g;
 
+if ($refdb eq "SILVA") {
+  $gg_path = "/home/oasis/data/NGS-ann-project/refs/silva/SILVA_128_SSURef_processed.fasta";
+}
 $cmd = `env > NGS-env`;
 $cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
 $cmd = `mv -f $sample_file.1 $sample_file`;
