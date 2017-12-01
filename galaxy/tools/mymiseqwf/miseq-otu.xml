@@ -26,7 +26,7 @@ cd ..; /home/oasis/data/NGS-ann-project/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl
        <option value="0.005">0.005</option>
     </param>
 
-    <repeat name="group1" title="FASTQ file for sample" max="20" default="1" help="You can add up to 20 samples">
+    <repeat name="group1" title="FASTQ file for sample" max="40" default="1" help="You can add up to 40 samples">
         <param name="group1_name" size="40" type="text" label="Please enter a unique sample ID" optional="false"/>
         <param name="group1_inputR1" type="data" format="fastq" label="Fastq file R1"/>
         <param name="group1_inputR2" type="data" format="fastq" label="Fastq file R2"/>
@@ -52,7 +52,7 @@ ${s.group1_name} ${s.group1_inputR1.file_name} ${s.group1_inputR2.file_name}
 
   <help>
 Summary:
-This workflow runs CD-HIT-OTU-MiSeq workflow for up 20 samples.
+This workflow runs CD-HIT-OTU-MiSeq workflow for up 40 samples.
 The input must be paired ended (PE) fastq files for each sample.
 
 For each sample, the workflow run the following process:
@@ -61,10 +61,14 @@ For each sample, the workflow run the following process:
 
 All samples will be pooled and will be clustering into OTUs
 
+Upload:
+    Please use Get_Data -> Upload_file on the tool panel to upload your fastq files.
+    Uploaded files will appear at right column. 
+
 Input:
     1. PE fastq files (2 files) for each sample
-       click "add new FASTQ file for sample" to add a new sample
-       select a group for the sample and give a unique sample name
+       click button "+ Insert FASTQ file for sample" to add a new sample
+       You must give a unique sample name to each sample
 
 Output:
     1. OTU clusters for each sample
