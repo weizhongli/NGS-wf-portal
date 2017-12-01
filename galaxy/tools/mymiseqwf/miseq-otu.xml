@@ -1,9 +1,13 @@
 <tool id="CD-HIT-OTU-MiSeq" name="CD-HIT-OTU-MiSeq" version="1.0.0">
   <description>CD-HIT-OTU-MiSeq for paired end fastq files</description>
   <command>
-cd ..; /home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl NGS-samples $output $R1_len $R2_len $abs $cutoff
+cd ..; /home/oasis/data/NGS-ann-project/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl NGS-samples $output $R1_len $R2_len $abs $cutoff
   </command>
   <inputs>
+    <param name="refdb" type="select" label="Reference 16S database">
+       <option value="Greengene" selected="True">Greengene</option>
+       <option value="SILVA">SILVA</option>
+    </param>
     <param name="R1_len" type="integer" value="150" label="Effective read length for R1 read"/>
     <param name="R2_len" type="integer" value="100" label="Effective read length for R2 read"/>
     <param name="cutoff" type="select" label="OTU clustering cutoff">
