@@ -140,7 +140,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     print "<hr>"."\n";
 
     // output files
-    $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/miseq";
+    $www_file_url = "/RNA-seq/Data/user-data/miseq";
     $file = "$www_file_url/$jobid/$jobid.tar.gz";
 
     $size = 0;
