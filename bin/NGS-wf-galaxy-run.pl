@@ -106,14 +106,14 @@ $num_samples = $#samples+1;
 $cmd = `env > NGS-env`;
 $cmd = `echo "$galaxy_job" > $job_file`;
 
-
-
 ################### copy to www_dir
-#################### copy to www
 $cmd = `mkdir -p $www_dir/$job_id`;
 $cmd = `rsync -av NGS* $www_dir/$job_id`;
-chdir("$www_dir/$job_id");
 
+
+################### move to www_dir, working directory
+chdir("$www_dir/$job_id");
+open(LOG, "> NGS-log") || die "can not write to NGS-log";
 
 #################### submit jobs
 if (($galaxy_job eq "qc-tophat-cufflink-se") or ($galaxy_job eq "qc-tophat-cufflink-pe")   ) {
@@ -221,11 +221,14 @@ elsif (($galaxy_job eq "qc-trinity-se") or ($galaxy_job eq "qc-trinity-pe") ) {
 }
 elsif (($galaxy_job eq "qc-star-se") or ($galaxy_job eq "qc-star-pe")   ) {
   #first pass
+  print LOG "$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -T $ref_genome-STAR\n";
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -T $ref_genome-STAR`;
 
   #multiple sample second pass
+  print LOG "find $job_work_dir -name starSJ.out.tab\n";
   $cmd = `find $job_work_dir -name starSJ.out.tab`; $cmd =~ s/\n/ /g; $cmd =~ s/\s+$//; $cmd =~ s/^\s+//;
   my $SJ_str = $cmd;
+  print LOG "$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:\"$SJ_str\":$ref_genome-RSEM\n";
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:"$SJ_str":$ref_genome-RSEM`;
 
   my $RSEM_transcripts = join(" ", map{ "$job_work_dir/$_/RSEM.isoforms.results" } @samples);
@@ -241,6 +244,7 @@ elsif (($galaxy_job eq "qc-star-se") or ($galaxy_job eq "qc-star-pe")   ) {
       }
     }
     close(GRP);
+    print LOG "$script_dir/NGS-wf-galaxy.pl -S Sample-all-transcript-matrix-group -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j post-RSEM-group -T \"$RSEM_transcripts\":\"$RSEM_genes\":$sample_txt\n";
     $cmd = `$script_dir/NGS-wf-galaxy.pl -S Sample-all-transcript-matrix-group -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j post-RSEM-group -T "$RSEM_transcripts":"$RSEM_genes":$sample_txt`; #### NOTE with space
   }
 
@@ -250,7 +254,7 @@ elsif (($galaxy_job eq "qc-star-se") or ($galaxy_job eq "qc-star-pe")   ) {
 else {
   exit;
 }
-
+close(LOG);
 
 chdir($job_work_dir);
 open(OUT, "> $job_output") || die "can not write to $job_output";
