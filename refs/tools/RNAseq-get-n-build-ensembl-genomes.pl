@@ -4,6 +4,8 @@
 #                   use ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz        860,561 KB  3.1 GB
 # for mouse, do not use ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
 #                   use ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz
+# for zebrafish do not use ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.toplevel.fa.gz
+#                      use ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz
 my $data = <<EOD;
 cow bos_taurus
   ftp://ftp.ensembl.org/pub/current_fasta/bos_taurus/cdna/Bos_taurus.UMD3.1.cdna.all.fa.gz
@@ -11,63 +13,63 @@ cow bos_taurus
   ftp://ftp.ensembl.org/pub/current_fasta/bos_taurus/dna/Bos_taurus.UMD3.1.dna.toplevel.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/bos_taurus/ncrna/Bos_taurus.UMD3.1.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/bos_taurus/pep/Bos_taurus.UMD3.1.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/bos_taurus/Bos_taurus.UMD3.1.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/bos_taurus/Bos_taurus.UMD3.1.93.gtf.gz
 ----c.elegan caenorhabditis_elegans
   ftp://ftp.ensembl.org/pub/current_fasta/caenorhabditis_elegans/cdna/Caenorhabditis_elegans.WBcel235.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/caenorhabditis_elegans/cds/Caenorhabditis_elegans.WBcel235.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/caenorhabditis_elegans/dna/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/caenorhabditis_elegans/ncrna/Caenorhabditis_elegans.WBcel235.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/caenorhabditis_elegans/pep/Caenorhabditis_elegans.WBcel235.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/caenorhabditis_elegans/Caenorhabditis_elegans.WBcel235.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/caenorhabditis_elegans/Caenorhabditis_elegans.WBcel235.93.gtf.gz
 ----zebrafish Danio_rerio
-  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/cdna/Danio_rerio.GRCz10.cdna.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/cds/Danio_rerio.GRCz10.cds.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/dna/Danio_rerio.GRCz10.dna.toplevel.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/ncrna/Danio_rerio.GRCz10.ncrna.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/pep/Danio_rerio.GRCz10.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/danio_rerio/Danio_rerio.GRCz10.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/cdna/Danio_rerio.GRCz11.cdna.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/cds/Danio_rerio.GRCz11.cds.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/ncrna/Danio_rerio.GRCz11.ncrna.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/danio_rerio/pep/Danio_rerio.GRCz11.pep.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/danio_rerio/Danio_rerio.GRCz11.93.gtf.gz
 ----fruitfly drosophila_melanogaster
   ftp://ftp.ensembl.org/pub/current_fasta/drosophila_melanogaster/cdna/Drosophila_melanogaster.BDGP6.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/drosophila_melanogaster/cds/Drosophila_melanogaster.BDGP6.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/drosophila_melanogaster/dna/Drosophila_melanogaster.BDGP6.dna.toplevel.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/drosophila_melanogaster/ncrna/Drosophila_melanogaster.BDGP6.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/drosophila_melanogaster/pep/Drosophila_melanogaster.BDGP6.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.93.gtf.gz
 ----human homo_sapiens
   ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.93.gtf.gz
 ----mouse mus_musculus
   ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/cds/Mus_musculus.GRCm38.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/ncrna/Mus_musculus.GRCm38.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/mus_musculus/pep/Mus_musculus.GRCm38.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/mus_musculus/Mus_musculus.GRCm38.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/mus_musculus/Mus_musculus.GRCm38.93.gtf.gz
 ----sheep ovis_aries
   ftp://ftp.ensembl.org/pub/current_fasta/ovis_aries/cdna/Ovis_aries.Oar_v3.1.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/ovis_aries/cds/Ovis_aries.Oar_v3.1.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/ovis_aries/dna/Ovis_aries.Oar_v3.1.dna.toplevel.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/ovis_aries/ncrna/Ovis_aries.Oar_v3.1.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/ovis_aries/pep/Ovis_aries.Oar_v3.1.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/ovis_aries/Ovis_aries.Oar_v3.1.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/ovis_aries/Ovis_aries.Oar_v3.1.93.gtf.gz
 ----yeast saccharomyces_cerevisiae
   ftp://ftp.ensembl.org/pub/current_fasta/saccharomyces_cerevisiae/cdna/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/saccharomyces_cerevisiae/cds/Saccharomyces_cerevisiae.R64-1-1.cds.all.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/saccharomyces_cerevisiae/ncrna/Saccharomyces_cerevisiae.R64-1-1.ncrna.fa.gz
   ftp://ftp.ensembl.org/pub/current_fasta/saccharomyces_cerevisiae/pep/Saccharomyces_cerevisiae.R64-1-1.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.85.gtf.gz  
+  ftp://ftp.ensembl.org/pub/current_gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.93.gtf.gz  
 ----pig sus_scrofa
-  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/cdna/Sus_scrofa.Sscrofa10.2.cdna.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/cds/Sus_scrofa.Sscrofa10.2.cds.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/dna/Sus_scrofa.Sscrofa10.2.dna.toplevel.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/ncrna/Sus_scrofa.Sscrofa10.2.ncrna.fa.gz
-  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/pep/Sus_scrofa.Sscrofa10.2.pep.all.fa.gz
-  ftp://ftp.ensembl.org/pub/current_gtf/sus_scrofa/Sus_scrofa.Sscrofa10.2.85.gtf.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/cdna/Sus_scrofa.Sscrofa11.1.cdna.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/cds/Sus_scrofa.Sscrofa11.1.cds.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/dna/Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/ncrna/Sus_scrofa.Sscrofa11.1.ncrna.fa.gz
+  ftp://ftp.ensembl.org/pub/current_fasta/sus_scrofa/pep/Sus_scrofa.Sscrofa11.1.pep.all.fa.gz
+  ftp://ftp.ensembl.org/pub/current_gtf/sus_scrofa/Sus_scrofa.Sscrofa11.1.93.gtf.gz
 EOD
 $data =~ s/\s+/ /g;
 
