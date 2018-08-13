@@ -119,22 +119,22 @@ open(LOG, "> NGS-log") || die "can not write to NGS-log";
 if (($galaxy_job eq "qc-tophat-cufflink-se") or ($galaxy_job eq "qc-tophat-cufflink-pe")   ) {
   my $assembly_f = "assembly.txt";
   my $assembly_dir = "Merged_transcripts_from_all_samples";
-  my $assembly_gtf = "$job_work_dir/$assembly_dir/cuffmerge/merged.gtf";
+  my $assembly_gtf = "$www_dir/$job_id/$assembly_dir/cuffmerge/merged.gtf";
 
  #$cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -t $opt_file;`;
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -T $ref_genome.gtf:$ref_genome`;
   $cmd = `mkdir -p $assembly_dir`;
-  $cmd = `find $www_dir/$job_id -name transcripts.gtf > $assembly_dir/$assembly_f`; #### with $job_work_dir to use full path
+  $cmd = `find $www_dir/$job_id -name transcripts.gtf > $assembly_dir/$assembly_f`; #### use full path
   $cmd = `$script_dir/NGS-wf-galaxy.pl -S $assembly_dir -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j cuffmerge -T $ref_genome.gtf:$ref_genome.fa:$assembly_f`;
 
   #### pairwise diff
   my @pairs = ();
   for ($i=0; $i<$num_groups-1; $i++) {
     my $gi = $groups[$i];
-    my $bami = join(",", map{ "$job_work_dir/$_/$galaxy_job/tophat/accepted_hits.bam" } @{ $group_2_samples{$gi} });
+    my $bami = join(",", map{ "$www_dir/$job_id/$_/$galaxy_job/tophat/accepted_hits.bam" } @{ $group_2_samples{$gi} });
     for ($j=$i+1; $j<$num_groups; $j++) {
       my $gj = $groups[$j];
-      my $bamj = join(",", map{ "$job_work_dir/$_/$galaxy_job/tophat/accepted_hits.bam" } @{ $group_2_samples{$gj} });
+      my $bamj = join(",", map{ "$www_dir/$job_id/$_/$galaxy_job/tophat/accepted_hits.bam" } @{ $group_2_samples{$gj} });
       my $pair = $gi . "_vs_" . $gj;
       $cmd = `$script_dir/NGS-wf-galaxy.pl -S $pair -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j cuffdiff -T $ref_genome.fa:$assembly_gtf:$bami:$bamj`;
       push(@pairs, $pair);
@@ -199,13 +199,13 @@ elsif (($galaxy_job eq "qc-trinity-se") or ($galaxy_job eq "qc-trinity-pe") ) {
 
   #### run Identification and Analysis of Differentially Expressed Trinity Genes and Transcripts
   #### run sample pairwise
-  my $RSEM_transcripts = join(" ", map{ "$job_work_dir/$_/RSEM.isoforms.results" } @samples);
-  my $RSEM_genes       = join(" ", map{ "$job_work_dir/$_/RSEM.genes.results" } @samples);
+  my $RSEM_transcripts = join(" ", map{ "$www_dir/$job_id/$_/RSEM.isoforms.results" } @samples);
+  my $RSEM_genes       = join(" ", map{ "$www_dir/$job_id/$_/RSEM.genes.results" } @samples);
   $cmd = `$script_dir/NGS-wf-galaxy.pl -S Sample-all-transcript-matrix -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j post-RSEM -T "$RSEM_transcripts":"$RSEM_genes"`; #### NOTE with space
 
   #### run group pairwise
   if ($num_groups > 1) {
-    my $sample_txt = "$job_work_dir/Sample_group.txt";
+    my $sample_txt = "$www_dir/$job_id/Sample_group.txt";
     open(GRP, "> $sample_txt") || die "can not open $sample_txt";
     for ($i=0; $i<$num_groups; $i++) {
       my $gi = $groups[$i];
@@ -231,11 +231,11 @@ elsif (($galaxy_job eq "qc-star-se") or ($galaxy_job eq "qc-star-pe")   ) {
   print LOG "$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:\"$SJ_str\":$ref_genome-RSEM\n";
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:"$SJ_str":$ref_genome-RSEM`;
 
-  my $RSEM_transcripts = join(" ", map{ "$job_work_dir/$_/RSEM.isoforms.results" } @samples);
-  my $RSEM_genes       = join(" ", map{ "$job_work_dir/$_/RSEM.genes.results" } @samples);
+  my $RSEM_transcripts = join(" ", map{ "$www_dir/$job_id/$_/RSEM.isoforms.results" } @samples);
+  my $RSEM_genes       = join(" ", map{ "$www_dir/$job_id/$_/RSEM.genes.results" } @samples);
   #### run group pairwise
   if ($num_groups > 1) {
-    my $sample_txt = "$job_work_dir/Sample_group.txt";
+    my $sample_txt = "$www_dir/$job_id/Sample_group.txt";
     open(GRP, "> $sample_txt") || die "can not open $sample_txt";
     for ($i=0; $i<$num_groups; $i++) {
       my $gi = $groups[$i];
