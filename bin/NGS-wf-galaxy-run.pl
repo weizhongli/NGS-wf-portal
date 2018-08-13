@@ -37,7 +37,7 @@ my $size_file   = "NGS-size";
 my $job_id      = random_ID();
 my $s3_path     = "/home/oasis/gordon-data/www/home/RNA-seq/Data/download";
 my $s3_web_url  = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/download";
-my $www_dir     = "/home/oasis/gordon-data/galaxy-user-data";
+my $www_dir     = "/home/oasis/gordon-data/galaxy-user-data/RNA-seq";
 my $www_web_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/job.php";
 my $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data";
 my $job_output  = "working/job.html";
@@ -105,6 +105,15 @@ $num_samples = $#samples+1;
 
 $cmd = `env > NGS-env`;
 $cmd = `echo "$galaxy_job" > $job_file`;
+
+
+
+################### copy to www_dir
+#################### copy to www
+$cmd = `mkdir -p $www_dir/$job_id`;
+$cmd = `rsync -av NGS* $www_dir/$job_id`;
+chdir("$www_dir/$job_id");
+
 
 #################### submit jobs
 if (($galaxy_job eq "qc-tophat-cufflink-se") or ($galaxy_job eq "qc-tophat-cufflink-pe")   ) {
@@ -243,14 +252,7 @@ else {
 }
 
 
-#################### upload to s3
-#$cmd = `tar czf $job_id.tar.gz $files_to_save`;
-#$cmd = `du -h $job_id.tar.gz`; 
-my $size = "0 GB";
-#my $size = (split(/\s+/,$cmd))[0];
-#$cmd = `cp $job_id.tar.gz $s3_path/$job_id/$job_id.tar.gz`; ##copy $job_id.tar.gz
-#$cmd = `rm -f $job_id.tar.gz`;
-
+chdir($job_work_dir);
 open(OUT, "> $job_output") || die "can not write to $job_output";
 print OUT <<EOD;
 <HTML>
@@ -266,12 +268,13 @@ close(OUT);
 
 
 #################### create index file
+chdir("$www_dir/$job_id");
 open(OUT, "> $readme_file") || die "can not write to $readme_file";
 print OUT <<EOD;
 
 <h2>Download results</h2>
 <OL>
-  <!-- <LI>Download a gzipped file that contains all the results ($size) from <A href="$s3_web_url/$job_id/$job_id.tar.gz">our cloud storage</A>. -->
+  <!-- <LI>Download a gzipped file that contains all the results from <A href="$s3_web_url/$job_id/$job_id.tar.gz">our cloud storage</A>. -->
   <LI>Browse the directory and files from <A href="$www_file_url/$job_id/$file_list_file">file list page</A> to view or download individual files.
   <LI>If you are Linux / MacOS user, you can batch download the job directory with command such as "wget -r $www_file_url/$job_id".
 </OL>
@@ -287,17 +290,12 @@ BAM file and give to genome browser.
 EOD
 close(OUT);
 
-#################### copy to www
-$cmd = `mkdir -p $www_dir/$job_id`;
-$cmd = `rsync -av $readme_file $files_to_save $www_dir/$job_id`;
-#$cmd = `cp $job_id.tar.gz $s3_path/$job_id/$job_id.tar.gz`; ##copy $job_id.tar.gz
-#$cmd = `rm -f $job_id.tar.gz`;
-chdir("$www_dir/$job_id");
 $cmd = `$script_dir/NGS-wf-galaxy-html-ls.pl . > $file_list_file`;
-#$cmd = `echo $size > $size_file`;
 chdir($job_work_dir);
-
 #################### END, after this Galaxy will clean up data
+
+
+
 
 ################################################################################
 ################################################################################
