@@ -124,7 +124,7 @@ if (($galaxy_job eq "qc-tophat-cufflink-se") or ($galaxy_job eq "qc-tophat-cuffl
  #$cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -t $opt_file;`;
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -T $ref_genome.gtf:$ref_genome`;
   $cmd = `mkdir -p $assembly_dir`;
-  $cmd = `find $job_work_dir -name transcripts.gtf > $assembly_dir/$assembly_f`; #### with $job_work_dir to use full path
+  $cmd = `find $www_dir/$job_id -name transcripts.gtf > $assembly_dir/$assembly_f`; #### with $job_work_dir to use full path
   $cmd = `$script_dir/NGS-wf-galaxy.pl -S $assembly_dir -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j cuffmerge -T $ref_genome.gtf:$ref_genome.fa:$assembly_f`;
 
   #### pairwise diff
@@ -225,8 +225,8 @@ elsif (($galaxy_job eq "qc-star-se") or ($galaxy_job eq "qc-star-pe")   ) {
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job -T $ref_genome-STAR`;
 
   #multiple sample second pass
-  print LOG "find $job_work_dir -name starSJ.out.tab\n";
-  $cmd = `find $job_work_dir -name starSJ.out.tab`; $cmd =~ s/\n/ /g; $cmd =~ s/\s+$//; $cmd =~ s/^\s+//;
+  print LOG "find $www_dir/$job_id -name starSJ.out.tab\n";
+  $cmd = `find $www_dir/$job_id -name starSJ.out.tab`; $cmd =~ s/\n/ /g; $cmd =~ s/\s+$//; $cmd =~ s/^\s+//;
   my $SJ_str = $cmd;
   print LOG "$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:\"$SJ_str\":$ref_genome-RSEM\n";
   $cmd = `$script_dir/NGS-wf-galaxy.pl -s NGS-samples -i $script_dir/NGS-wf-galaxy-RNAseq-config.pl -j $galaxy_job-2nd-pass -T $ref_genome-STAR:"$SJ_str":$ref_genome-RSEM`;
