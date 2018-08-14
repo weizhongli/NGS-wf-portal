@@ -19,7 +19,6 @@
 </script>
 
 <?php
-
   function humanFileSize($size, $unit="") {
     // modified from: http://stackoverflow.com/questions/15188033/human-readable-file-size
     if ((!$unit && $size >= 1<<30) || $unit == "GB") {
@@ -27,104 +26,104 @@
     } elseif ((!$unit && $size >= 1<<20) || $unit == "MB") {
       return number_format($size/(1<<20),2)." MB";
     } elseif ((!$unit && $size >= 1<<10) || $unit == "KB") {
-return number_format($size/(1<<10),2)." KB";
-} else {
-return number_format($size)." bytes";
-}
-}
+      return number_format($size/(1<<10),2)." KB";
+    } else {
+      return number_format($size)." bytes";
+    }
+  }
 
-function process_this_dir($path) {
-global $idir;
-$files = scandir($path);
-$sub_dirs = array();
-$sub_files = array();
-sort($files);
-foreach ($files as $file) {
-if (substr($file, 0, 1) === ".") continue;
-if (substr($file, -5) === ".html") continue;
-if (substr($file, -3) === ".pl") continue;
-if (substr($file, -3) === ".sh") continue;
-if (substr($file, 0, 2) === "WF") continue;
-if (substr($file, 0, 3) === "NGS") continue;
-if (is_dir("$path/$file")) {
-array_push($sub_dirs, $file);
-} else {
-array_push($sub_files, $file);
-}
-}
-if (empty($sub_dirs) && empty($sub_files)) return 0;
-$dirname = "<span style='font-size:12px;'>".basename($path)."</span>";
-if (substr_count($path, "/") === 1) {
-$dirname = "Click to expand / collapse directories";
-}
-print "<p><button class='fold' id='b".$idir."' onclick='fold(this)'>+</button>".$dirname."</p>"."\n";
-print "<div class='tree' id='f".$idir."'>"."\n";
-$idir ++;
-foreach ($sub_files as $file) {
-print "<p style='font-size:12px;'><a href='".$path."/".$file."'>".$file." (".humanFileSize(filesize("$path/$file")).")</a></p>"."\n";
-}
-foreach ($sub_dirs as $dir) {
-process_this_dir($path."/".$dir);
-}
-print '</div>'."\n";
-return 0;
-}
+  function process_this_dir($path) {
+    global $idir;
+    $files = scandir($path);
+    $sub_dirs = array();
+    $sub_files = array();
+    sort($files);
+    foreach ($files as $file) {
+      if (substr($file, 0, 1) === ".") continue;
+      if (substr($file, -5) === ".html") continue;
+      if (substr($file, -3) === ".pl") continue;
+      if (substr($file, -3) === ".sh") continue;
+      if (substr($file, 0, 2) === "WF") continue;
+      if (substr($file, 0, 3) === "NGS") continue;
+      if (is_dir("$path/$file")) {
+        array_push($sub_dirs, $file);
+      } else {
+        array_push($sub_files, $file);
+      }
+    }
+    if (empty($sub_dirs) && empty($sub_files)) return 0;
+    $dirname = "<span style='font-size:12px;'>".basename($path)."</span>";
+    if (substr_count($path, "/") === 1) {
+      $dirname = "Click to expand / collapse directories";
+    }
+    print "<p><button class='fold' id='b".$idir."' onclick='fold(this)'>+</button>".$dirname."</p>"."\n";
+    print "<div class='tree' id='f".$idir."'>"."\n";
+    $idir ++;
+    foreach ($sub_files as $file) {
+      print "<p style='font-size:12px;'><a href='".$path."/".$file."'>".$file." (".humanFileSize(filesize("$path/$file")).")</a></p>"."\n";
+    }
+    foreach ($sub_dirs as $dir) {
+      process_this_dir($path."/".$dir);
+    }
+    print '</div>'."\n";
+    return 0;
+  }
 
-function process_WF_dir($path) {
-global $idir;
-$files = scandir($path);
-$sub_dirs = array();
-$sub_files = array();
-sort($files);
-foreach ($files as $file) {
-if (substr($file, 0, 1) === ".") continue;
-if (substr($file, -5) === ".pids") continue;
-if (is_dir("$path/$file")) {
-array_push($sub_dirs, $file);
-} else {
-array_push($sub_files, $file);
-}
-}
-if (empty($sub_dirs) && empty($sub_files)) return 0;
-$dirname = "Click to display workflow / program command line parameters and standard output";
-print "<p><button class='fold' id='b".$idir."' onclick='fold(this)'>+</button>".$dirname."</p>"."\n";
-print "<div class='tree' id='f".$idir."'>"."\n";
-$idir ++;
-foreach ($sub_files as $file) {
-print "<p style='font-size:12px;'><a href='".$path."/".$file."'>".$file." (".humanFileSize(filesize("$path/$file")).")</a></p>"."\n";
-}
-foreach ($sub_dirs as $dir) {
-process_this_dir($path."/".$dir);
-}
-print '</div>'."\n";
-return 0;
-}
+  function process_WF_dir($path) {
+    global $idir;
+    $files = scandir($path);
+    $sub_dirs = array();
+    $sub_files = array();
+    sort($files);
+    foreach ($files as $file) {
+      if (substr($file, 0, 1) === ".") continue;
+      if (substr($file, -5) === ".pids") continue;
+      if (is_dir("$path/$file")) {
+        array_push($sub_dirs, $file);
+      } else {
+        array_push($sub_files, $file);
+      }
+    }
+    if (empty($sub_dirs) && empty($sub_files)) return 0;
+    $dirname = "Click to display workflow / program command line parameters and standard output";
+    print "<p><button class='fold' id='b".$idir."' onclick='fold(this)'>+</button>".$dirname."</p>"."\n";
+    print "<div class='tree' id='f".$idir."'>"."\n";
+    $idir ++;
+    foreach ($sub_files as $file) {
+      print "<p style='font-size:12px;'><a href='".$path."/".$file."'>".$file." (".humanFileSize(filesize("$path/$file")).")</a></p>"."\n";
+    }
+    foreach ($sub_dirs as $dir) {
+      process_this_dir($path."/".$dir);
+    }
+    print '</div>'."\n";
+    return 0;
+  }
 
-
-// global variables
-$idir = 1;  // current subdirectory level for tree structure visualization
-$jobid = $_GET['jobid'];
-
-// render page contents
-if (file_exists("user-data/RNAseq/$jobid/readme.html")) {
-print "<p>Congratulations! Your job <b>".$jobid."</b> is completed.</p>"."\n";
-print "<p>You may download all workflow results by wget -r http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/RNAseq/$jobid. <br>\n";
-print "You can also browse the individual files, at bottom of the page. <br>\n";
-print "If this page takes long time to load, you can view the results with <A href=\"/RNA-seq/Data/user-data/RNAseq/$jobid/file-list.html\">this link. </A> <br>";
-print "This server is getting popular, so we can not store big files for long time, old files older than 90 days will be deleted. </p>";
-print "<hr>"."\n";
-
-// job summary
-$jobtype = "default";  // three types by far: tophat-cufflink, trinity, star
-$readtype = "NA";  // pe or se
-$reference = "NA";
-$samples = array();  // (indexed => associative): name, left/right, group
+  // global variables
+  $idir = 1;  // current subdirectory level for tree structure visualization
+  $jobid = $_GET['jobid'];
+  
+  // render page contents
+  if (file_exists("user-data/RNAseq/$jobid/readme.html")) {
+    print "<p>Congratulations! Your job <b>".$jobid."</b> is completed.</p>"."\n";
+    print "<p>You may download all workflow results by wget -r http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/RNAseq/$jobid. <br>\n";
+    print "You can also browse the individual files, at bottom of the page. <br>\n";
+    print "If this page takes long time to load, you can view the results with <A href=\"http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/RNAseq/$jobid/file-list.html\">this link. </A> <br>";
+    print "This server is getting popular, so we can not store big files for long time, old files older than 90 days will be deleted. </p>";
+    print "<hr>"."\n";
+    
+    // job summary
+    $jobtype = "default";  // three types by far: tophat-cufflink, trinity, star
+    $readtype = "NA";  // pe or se
+    $reference = "NA";
+    $samples = array();  // (indexed => associative): name, left/right, group
     $groups = array();  // (associative) group ID => sample names
     if ($job_file = fopen("user-data/RNAseq/$jobid/NGS-job", "r")) {
       $line = trim(fgets($job_file));
       $readtype = substr($line, -2);
       $jobtype = substr($line, 3, strlen($line)-6);
     }
+  
     $f = fopen("user-data/RNAseq/$jobid/NGS-config", "r");
     while (!feof($f)) {
       $line = trim(fgets($f));
@@ -162,71 +161,71 @@ $samples = array();  // (indexed => associative): name, left/right, group
     if ($jobtype === "tophat-cufflink") {
       $dirname = "qc-".$jobtype."-".$readtype;
       for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
-      if (!file_exists($filepath)) continue;
-      $f = fopen($filepath, "r");
-      while (!feof($f)) {
-        $line = trim(fgets($f));
-        if ($line === "") continue;
-        if (substr($line, 0, 5) === "Input") {
-          $samples[$i]["qc"] = array();
-          $a = explode(":", $line);
-          array_shift($a);
-          foreach ($a as $s) {
-            $b = explode(" ", trim($s));
-            array_push($samples[$i]["qc"], $b[0]);
+        $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        if (!file_exists($filepath)) continue;
+        $f = fopen($filepath, "r");
+        while (!feof($f)) {
+          $line = trim(fgets($f));
+          if ($line === "") continue;
+          if (substr($line, 0, 5) === "Input") {
+            $samples[$i]["qc"] = array();
+            $a = explode(":", $line);
+            array_shift($a);
+            foreach ($a as $s) {
+              $b = explode(" ", trim($s));
+              array_push($samples[$i]["qc"], $b[0]);
+            }
+          } elseif (substr($line, -22) === "Completed successfully") {
+            $samples[$i]["qc_success"] = 1;
           }
-        } elseif (substr($line, -22) === "Completed successfully") {
-          $samples[$i]["qc_success"] = 1;
         }
-      }
-      fclose($f);
+        fclose($f);
       }
     } elseif ($jobtype === "trinity") {
       $dirname = "post-".$jobtype."-".$readtype;
-        for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
-      if (!file_exists($filepath)) continue;
-      $f = fopen($filepath, "r");
-      while (!feof($f)) {
-        $line = trim(fgets($f));
-        if ($line === "") continue;
-        if (substr($line, 0, 5) === "Input") {
-          $samples[$i]["qc"] = array();
-          $a = explode(":", $line);
-          array_shift($a);
-          foreach ($a as $s) {
-            $b = explode(" ", trim($s));
-            array_push($samples[$i]["qc"], $b[0]);
+      for ($i = 0; $i < count($samples); $i ++) {
+        $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        if (!file_exists($filepath)) continue;
+        $f = fopen($filepath, "r");
+        while (!feof($f)) {
+          $line = trim(fgets($f));
+          if ($line === "") continue;
+          if (substr($line, 0, 5) === "Input") {
+            $samples[$i]["qc"] = array();
+            $a = explode(":", $line);
+            array_shift($a);
+            foreach ($a as $s) {
+              $b = explode(" ", trim($s));
+              array_push($samples[$i]["qc"], $b[0]);
+            }
+          } elseif (substr($line, -22) === "Completed successfully") {
+            $samples[$i]["qc_success"] = 1;
           }
-        } elseif (substr($line, -22) === "Completed successfully") {
-          $samples[$i]["qc_success"] = 1;
         }
+        fclose($f);
       }
-      fclose($f);
-    }
     } elseif ($jobtype === "star") {
       $dirname = "qc-".$readtype;
       for ($i = 0; $i < count($samples); $i ++) {
-      $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
-      if (!file_exists($filepath)) continue;
-      $f = fopen($filepath, "r");
-      while (!feof($f)) {
-        $line = trim(fgets($f));
-        if ($line === "") continue;
-        if (substr($line, 0, 5) === "Input") {
-          $samples[$i]["qc"] = array();
-          $a = explode(":", $line);
-          array_shift($a);
-          foreach ($a as $s) {
-            $b = explode(" ", trim($s));
-            array_push($samples[$i]["qc"], $b[0]);
+        $filepath = "user-data/RNAseq/$jobid/Sample_".str_replace("-", "_", $samples[$i]["name"])."/".$dirname."/qc.stderr";
+        if (!file_exists($filepath)) continue;
+        $f = fopen($filepath, "r");
+        while (!feof($f)) {
+          $line = trim(fgets($f));
+          if ($line === "") continue;
+          if (substr($line, 0, 5) === "Input") {
+            $samples[$i]["qc"] = array();
+            $a = explode(":", $line);
+            array_shift($a);
+            foreach ($a as $s) {
+              $b = explode(" ", trim($s));
+              array_push($samples[$i]["qc"], $b[0]);
+            }
+          } elseif (substr($line, -22) === "Completed successfully") {
+            $samples[$i]["qc_success"] = 1;
           }
-        } elseif (substr($line, -22) === "Completed successfully") {
-          $samples[$i]["qc_success"] = 1;
         }
-      }
-      fclose($f);
+        fclose($f);
       }
     } elseif ($jobtype === "hisat-stringtie") {
       $dirname = "qc-".$jobtype."-".$readtype;
@@ -315,7 +314,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
         fclose($f);
       }
     }
-
+  
     print "<table id='input_files'>"."\n";
     print "<tr><th width='60px'>Group</th><th width='100px'>Sample</th>";
     if ($readtype === "se") {
@@ -340,7 +339,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
     }
     print "</table>"."\n";
     print "<hr>"."\n";
-
+  
     // result summary
     if (file_exists("note.html")) {
       require("note.html");
@@ -361,21 +360,7 @@ $samples = array();  // (indexed => associative): name, left/right, group
       }
     }
     
-    // output files
-    $s3_web_url = "http://jcvi-weizhong-lab.s3-website-us-west-2.amazonaws.com/RNA-seq-portal/job-results";
-    $www_file_url = "http://weizhongli-lab.org/RNA-seq/Data/user-data";
-    $file = "$s3_web_url/$jobid/$jobid.tar.gz";
-
-    // instead of readme.html, now the script checks NGS-size for job completeness.
-    $size = 0;
-    if ($job_file = fopen("user-data/RNAseq/$jobid/NGS-size", "r")) {
-      $size = trim(fgets($job_file));
-    }
-    $size = humanFileSize($size);
     print "<p class='header3'>Browse files</p>"."\n";
-//    print "<p>You may download a gzipped tar file (.tar.gz) that contains all the results from our cloud storage.</p>"."\n";
-//    print "<p>You'd better also check the description of the output files below.</p>"."\n";
-//    print "<p><button onclick=\"location.href='$file';\">Download output files ($size)</button></p>"."\n";
     print "<p>Here, you may Browse the directory and files to view or download individual files.</p>"."\n";
     process_this_dir("user-data/RNAseq/$jobid");
     process_WF_dir("user-data/RNAseq/$jobid/WF-sh");
@@ -390,8 +375,6 @@ $samples = array();  // (indexed => associative): name, left/right, group
     print '<form id="jobform" name="jobform" action="job.php" method="GET"><p>Job ID: <input type="text" id="jobid" name="jobid" size="30"> <button type="submit">Submit</button></p></form>'."\n";
   }
 ?>
-
-</p>
 
 <?php
   require("../includes/jcvi_footer.php");
