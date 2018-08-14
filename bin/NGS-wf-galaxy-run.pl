@@ -35,9 +35,7 @@ my $sh_file     = "NGS-sh";
 my $job_file    = "NGS-job";
 my $size_file   = "NGS-size";
 my $job_id      = random_ID();
-my $s3_path     = "/home/oasis/gordon-data/www/home/RNA-seq/Data/download";
-my $s3_web_url  = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/download";
-my $www_dir     = "/home/oasis/gordon-data/galaxy-user-data/RNA-seq";
+my $www_dir     = "/home/oasis/gordon-data/galaxy-user-data/RNAseq";
 my $www_web_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/job.php";
 my $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data";
 my $job_output  = "working/job.html";
@@ -278,7 +276,6 @@ print OUT <<EOD;
 
 <h2>Download results</h2>
 <OL>
-  <!-- <LI>Download a gzipped file that contains all the results from <A href="$s3_web_url/$job_id/$job_id.tar.gz">our cloud storage</A>. -->
   <LI>Browse the directory and files from <A href="$www_file_url/$job_id/$file_list_file">file list page</A> to view or download individual files.
   <LI>If you are Linux / MacOS user, you can batch download the job directory with command such as "wget -r $www_file_url/$job_id".
 </OL>
