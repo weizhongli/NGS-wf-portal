@@ -130,7 +130,7 @@ chdir($job_work_dir);
 sub nice_run {
   my $command  = shift;
   print STDERR "running $command\n";
-  print LOG "$command\n"
+  print LOG "$command\n";
   my $cmd = `$command`;
 }
 
