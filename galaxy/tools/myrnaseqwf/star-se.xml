@@ -1,7 +1,7 @@
 <tool id="STAR_SE" name="STAR SE reads" version="1.0.0">
   <description>STAR analysis for groups of samples, SE reads</description>
   <command>
-/home/oasis/gordon-data/NGS-ann-project-new/NGS-tools/NGS-wf-galaxy-run.pl NGS-config qc-star-se $output
+cd ..; /data5/data/NGS-ann-project/NGS-tools/NGS-wf-galaxy-run.pl NGS-config qc-star-se $output
   </command>
   <inputs>
     <param name="ref_file" type="select" label="Please select a reference genome">
