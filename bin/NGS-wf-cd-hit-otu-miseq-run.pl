@@ -46,7 +46,7 @@ my $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/miseq";
 my $job_output   = "working/job.html";
 my $readme_file  = "readme.html";
 my $file_list_file = "file-list.html";
-my $files_to_save = "NGS* Sample* WF-sh"; #### a list of files to tar or to store
+my $files_to_save = "NGS* $refdb* Sample* WF-sh *html"; #### a list of files to tar or to store
 
 if ($refdb eq "SILVA") {
   $gg_path = "/home/oasis/data/NGS-ann-project/refs/silva/SILVA_128_SSURef_processed.fasta";
@@ -80,7 +80,6 @@ if (1) {
   nice_run("$cdhit_path/usecases/Miseq-16S/pool_samples.pl -s $sample_file -o Sample_pooled"); 
   nice_run("$cdhit_path/usecases/Miseq-16S/NG-Omics-WF.py -i $cdhit_path/usecases/Miseq-16S/NG-Omics-Miseq-16S.py -S Sample_pooled -j otu-pooled -T otu-pooled:$R1_len:$R2_len:$cutoff:$abs:$gg_R1:$gg_R2:75");
 
-  $files_to_save = "NGS* $refdb* Sample* WF-sh *.sh *stderr *stdout";
 }
 else {
   exit;
