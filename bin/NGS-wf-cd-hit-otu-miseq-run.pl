@@ -47,7 +47,6 @@ my $job_output   = "working/job.html";
 my $readme_file  = "readme.html";
 my $file_list_file = "file-list.html";
 my $files_to_save = "NGS* Sample* WF-sh"; #### a list of files to tar or to store
-my $pwd = `pwd`; $pwd =~ s/\n//g;
 
 if ($refdb eq "SILVA") {
   $gg_path = "/home/oasis/data/NGS-ann-project/refs/silva/SILVA_128_SSURef_processed.fasta";
@@ -73,6 +72,7 @@ if (1) {
   #### prepare sliced ref
   my $gg_name = "$refdb-spliced";
   qsub_n_wait("$cdhit_path/usecases/Miseq-16S/16S-ref-db-PE-splice.pl -i $t_R1 -j $t_R2  -d $gg_path -o $gg_name -p $R1_len -q $R2_len -c 0.99", 4);
+  my $pwd = `pwd`; $pwd =~ s/\n//g;
   my $gg_R1 = "$pwd/$gg_name-R1";
   my $gg_R2 = "$pwd/$gg_name-R2";
 
