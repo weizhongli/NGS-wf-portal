@@ -57,6 +57,14 @@ $cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
 $cmd = `mv -f $sample_file.1 $sample_file`;
 $cmd = `sed -i "s/^/Sample_/" $sample_file`;
 
+#################### copy to www
+$cmd = `mkdir -p $www_dir/$job_id`;
+$cmd = `rsync -av NGS* $www_dir/$job_id`;
+
+################### move to www_dir, working directory
+chdir("$www_dir/$job_id");
+open(LOG, "> NGS-log") || die "can not write to NGS-log";
+
 #################### submit jobs
 if (1) {
   $cmd = `head -n 1 $sample_file`; $cmd =~ s/\n//g;
@@ -77,8 +85,10 @@ if (1) {
 else {
   exit;
 }
+close(LOG);
 
 
+chdir($job_work_dir);
 open(OUT, "> $job_output") || die "can not write to $job_output";
 print OUT <<EOD;
 <HTML>
@@ -94,6 +104,7 @@ close(OUT);
 
 
 #################### create index file
+chdir("$www_dir/$job_id");
 open(OUT, "> $readme_file") || die "can not write to $readme_file";
 print OUT <<EOD;
 <h2>Download results</h2>
@@ -104,10 +115,6 @@ print OUT <<EOD;
 EOD
 close(OUT);
 
-#################### copy to www
-$cmd = `mkdir -p $www_dir/$job_id`;
-$cmd = `rsync -av $readme_file $files_to_save $www_dir/$job_id`;
-chdir("$www_dir/$job_id");
 $cmd = `$script_dir/NGS-wf-galaxy-html-ls.pl . > $file_list_file`;
 $cmd = `tar czf $job_id.tar.gz $files_to_save`;
 $cmd = `du -h $job_id.tar.gz`; 
@@ -123,6 +130,7 @@ chdir($job_work_dir);
 sub nice_run {
   my $command  = shift;
   print STDERR "running $command\n";
+  print LOG "$command\n"
   my $cmd = `$command`;
 }
 
@@ -132,6 +140,7 @@ sub qsub_n_wait {
   my $pwd = `pwd`; chop($pwd);
 
   print STDERR "qsub following command on $pe_no cores\n$command\n";
+  print LOG    "qsub following command on $pe_no cores\n$command\n";
 
   $cmd = `mkdir WF-sh` unless (-e "WF-sh");
 
