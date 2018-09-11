@@ -16,14 +16,17 @@ my $script_dir = $0;
 
 use Getopt::Std;
 use POSIX;
+getopts("i:o:x:y:a:c:r:U:",\%opts);
+die usage() unless ($opts{i} and $opts{o});
 
-my $sample_file = shift;
-my $galaxy_output = shift;
-my $R1_len = shift; $R1_len = 150 unless ($R1_len > 50);
-my $R2_len = shift; $R2_len = 100 unless ($R2_len > 50);
-my $abs = shift;    $abs = 0.0001 unless ($abs >= 0);
-my $cutoff = shift; $cutoff = 0.97 unless ($cutoff > 0.9);
-my $refdb = shift; $refdb = "Greengene" unless ($refdb);
+my $sample_file   = $opts{i};
+my $galaxy_output = $opts{o};
+my $R1_len        = $opts{x}; $R1_len = 150 unless ($R1_len > 50);
+my $R2_len        = $opts{y}; $R2_len = 100 unless ($R2_len > 50);
+my $abs           = $opts{a}; $abs = 0.0001 unless ($abs >= 0);
+my $cutoff        = $opts{c}; $cutoff = 0.97 unless ($cutoff > 0.9);
+my $refdb         = $opts{r}; $refdb = "Greengene" unless ($refdb);
+my $fetch_data    = $opts{U}; 
 
 my $job_work_dir  = `pwd`; chop($job_work_dir);
 my ($i, $j, $k, $ll, $cmd);
@@ -37,19 +40,19 @@ $ENV{"PATH"} = "/home/oasis/gordon-data/NGS-ann-project-new/apps/bin:". $ENV{"PA
 my $job_file     = "NGS-job";
 my $size_file    = "NGS-size";
 my $job_id       = random_ID();
-my $cdhit_path   = "/home/oasis/gordon-data/NGS-ann-project-new/apps/cd-hit-v4.6.8-2017-0621";
-my $gg_path      = "/home/oasis/gordon-data/NGS-ann-project-new/refs/gg_13_5_otus/Greengene-13-5-99.fasta";
-my $s3_web_url   = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/download";
-my $www_dir      = "/home/oasis/gordon-data/galaxy-user-data/miseq";
+my $cdhit_path   = "/data5/data/NGS-ann-project/apps/cd-hit";
+my $gg_path      = "/data5/data/NGS-ann-project/refs/greengene/Greengene-13-8-99.fasta";
+my $www_dir      = "/data5/data/galaxy-user-data/miseq";
 my $www_web_url  = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/job_miseq.php";
 my $www_file_url = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/user-data/miseq";
+my $s3_web_url   = "http://weizhong-lab.ucsd.edu/RNA-seq/Data/download";
 my $job_output   = "working/job.html";
 my $readme_file  = "readme.html";
 my $file_list_file = "file-list.html";
 my $files_to_save = "NGS* $refdb* Sample* WF-sh *html"; #### a list of files to tar or to store
 
 if ($refdb eq "SILVA") {
-  $gg_path = "/home/oasis/data/NGS-ann-project/refs/silva/SILVA_128_SSURef_processed.fasta";
+  $gg_path = "/data5/data/NGS-ann-project/refs/silva/SILVA_132_SSURef_processed.fasta";
 }
 $cmd = `env > NGS-env`;
 $cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
@@ -63,6 +66,10 @@ $cmd = `rsync -av NGS* $www_dir/$job_id`;
 ################### move to www_dir, working directory
 chdir("$www_dir/$job_id");
 open(LOG, "> NGS-log") || die "can not write to NGS-log";
+
+if ($fetch_data) {
+  fetch_data($sample_file);
+}
 
 #################### submit jobs
 if (1) {
@@ -88,6 +95,7 @@ close(LOG);
 
 
 chdir($job_work_dir);
+
 open(OUT, "> $job_output") || die "can not write to $job_output";
 print OUT <<EOD;
 <HTML>
@@ -153,7 +161,7 @@ sub qsub_n_wait {
 #!/bin/sh
 #\$ -v PATH
 #\$ -V
-#\$ -q RNA.q
+#\$ -q all.q
 #\$ -pe orte $pe_no
 #\$ -e $sh_f.err
 #\$ -o $sh_f.out
@@ -196,4 +204,28 @@ sub random_ID{
 }
 ########## END random_ID
 
+sub fetch_data {
+  my $sample_file = shift;
+  my $sample_file_tmp = "$sample_file.$$";
+
+}
+
+sub usage {
+<<EOD
+NGS portal Miseq 16S run script
+
+usage:
+  $script_name -i NGS-sample -o output -x R1_trim_len -y R2_trim_len -a abundance_cutoff -c clustering_cutoff -r refdb
+
+  options
+    -i NGS-sample file
+    -o output
+    -x length to trim R1 reads, default 150
+    -y length to trim R2 reads, default 100
+    -a abundance cutoff, default 0.0001
+    -c OTU clustering cutoff, default 0.97
+    -r reference DB, default Greengene
+    -U fetch fastq from SRA, or from URL, default 0
+EOD
+}
 ########## END qsub_n_wait
