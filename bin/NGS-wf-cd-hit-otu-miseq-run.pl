@@ -35,7 +35,7 @@ my $qsub_no = 0;
 my $ref_genome = "";
 
 ########## ENV 
-$ENV{"PATH"} = "/home/oasis/gordon-data/NGS-ann-project-new/apps/bin:". $ENV{"PATH"};
+$ENV{"PATH"} = "/data5/data/NGS-ann-project/apps/bin:". $ENV{"PATH"};
 
 my $job_file     = "NGS-job";
 my $size_file    = "NGS-size";
