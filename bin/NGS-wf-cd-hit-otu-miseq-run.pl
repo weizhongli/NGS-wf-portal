@@ -40,6 +40,7 @@ $ENV{"PATH"} = "/home/oasis/gordon-data/NGS-ann-project-new/apps/bin:". $ENV{"PA
 my $job_file     = "NGS-job";
 my $size_file    = "NGS-size";
 my $job_id       = random_ID();
+my $sratool_path = "/data5/data/NGS-ann-project/apps/sratoolkit/bin";
 my $cdhit_path   = "/data5/data/NGS-ann-project/apps/cd-hit";
 my $gg_path      = "/data5/data/NGS-ann-project/refs/greengene/Greengene-13-8-99.fasta";
 my $www_dir      = "/data5/data/galaxy-user-data/miseq";
@@ -57,6 +58,7 @@ if ($refdb eq "SILVA") {
 $cmd = `env > NGS-env`;
 $cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
 $cmd = `mv -f $sample_file.1 $sample_file`;
+$cmd = `sed -i "s/__cn__/\\n/g" $sample_file`; #### for text area input, galaxy changed \n to __cn__, change it back
 $cmd = `sed -i "s/^/Sample_/" $sample_file`;
 
 #################### copy to www
@@ -207,8 +209,49 @@ sub random_ID{
 sub fetch_data {
   my $sample_file = shift;
   my $sample_file_tmp = "$sample_file.$$";
+  my $fq_dump_exe = "$sratool_path/fastq-dump";
 
+  my ($i, $j, $k, $ll, $cmd, $p);
+  my $down_dir = "URL";
+  $cmd = `mkdir $down_dir`;
+  $p = `pwd -P $down_dir`; chop($p);
+
+  open(OUT, "> $sample_file_tmp") || die "can not write to $sample_file_tmp";
+  open(SAM, $sample_file) || die "can not open $sample_file";
+  while($ll = <SAM>) {
+    chop($ll);
+    next unless ($ll =~ /^\S/);
+    my @lls = split(/\s+/, $ll);
+    if ($lls[1] =~ /^SRR/) { #### SRA download
+
+      my $acc = $lls[1];
+      $cmd = `$fq_dump_exe --accession $acc --split-files --outdir $down_dir`;
+      my $r1 = "$p/$acc". "_1.fastq";      
+      my $r2 = "$p/$acc". "_2.fastq";      
+      ((-e $r1) and (-e $r2)) || die "can not download $acc";
+      print OUT "$lls[0]\t$r1\t$r2\n";
+    }
+    elsif ((($lls[1] =~ /^ftp:/  ) and ($lls[2] =~ /^ftp:/  )) or 
+           (($lls[1] =~ /^http:/ ) and ($lls[2] =~ /^http:/ )) or 
+           (($lls[1] =~ /^https:/) and ($lls[2] =~ /^https:/)) ) {
+      my $r1 = "$p/$lls[0]-R1.fastq";      
+      my $r2 = "$p/$lls[0]-R2.fastq";      
+      $cmd = `wget -O $r1 $lls[1]`;
+      $cmd = `wget -O $r2 $lls[2]`;
+      ((-e $r1) and (-e $r2)) || die "can not download $lls[1] and $lls[2]";
+      print OUT "$lls[0]\t$r1\t$r2\n";
+    }
+    else {
+      die "error, sample download url format error\n";
+    }
+  }
+  close(SAM);
+  close(OUT);
+
+  $cmd = `mv -f $sample_file $sample_file.url`;
+  $cmd = `mv -f $sample_file_tmp $sample_file`;
 }
+
 
 sub usage {
 <<EOD
