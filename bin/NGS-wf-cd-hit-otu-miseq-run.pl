@@ -215,6 +215,7 @@ sub fetch_data {
   my $down_dir = "URL";
   $cmd = `mkdir $down_dir`;
   $p = `pwd -P $down_dir`; chop($p);
+  $p = "$p/$down_dir";
 
   open(OUT, "> $sample_file_tmp") || die "can not write to $sample_file_tmp";
   open(SAM, $sample_file) || die "can not open $sample_file";
