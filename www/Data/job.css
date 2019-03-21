@@ -1,0 +1,62 @@
+/* Additional styles for job report page */
+
+button {
+  background: lightgray;
+  border: none;
+  padding: 5px 10px 5px 10px;
+}
+button:hover {
+  background: darkgray;
+}
+button.fold {
+  padding: 0px;
+  margin: 0px 10px 0px 0px;
+  width: 20px;
+  height: 20px;
+}
+input[type=text] {
+  border: 1px solid white;
+  border-bottom: 1px solid dimgray;
+  box-sizing:border-box;
+  height: 24px;
+}
+input[type=text]:hover {
+  background-color: whitesmoke;
+  border: 1px solid dimgray;
+}
+table {
+  border: 1px solid lightgrey;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+tr {
+  line-height: 20px;
+}
+th {
+  padding: 0px 5px 0px 5px;
+  border-bottom: 1px solid lightgrey;
+}
+td {
+  padding: 0px 5px 0px 5px;
+  word-wrap: break-word;
+}
+tr:hover {
+  background-color: whitesmoke;
+}
+/*td:hover {
+  background-color: lightgray;
+}*/
+div.sub {
+  font-size: 10px;
+  margin-left: 20px;
+  margin-right: 0px;
+}
+div.tree {
+  margin-left: 20px;
+  margin-right: 0px;
+  font-family: Consolas,monospace;
+  font-size: 12px;
+  line-height: 75%;
+  display: none;
+}
+
