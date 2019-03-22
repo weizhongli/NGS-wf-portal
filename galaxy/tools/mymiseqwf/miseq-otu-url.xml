@@ -1,7 +1,7 @@
-<tool id="CD-HIT-OTU-MiSeq" name="CD-HIT-OTU-MiSeq" version="1.0.0">
-  <description>CD-HIT-OTU-MiSeq for paired end fastq files</description>
+<tool id="CD-HIT-OTU-MiSeq-url" name="CD-HIT-OTU-MiSeq-url" version="1.0.0">
+  <description>CD-HIT-OTU-MiSeq for paired end fastq files input URL</description>
   <command>
-cd ..; /data5/data/NGS-ann-project/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl -i NGS-samples -o $output -x $R1_len -y $R2_len -a $abs -c $cutoff -r $refdb
+cd ..; /data5/data/NGS-ann-project/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl -i NGS-samples -o $output -x $R1_len -y $R2_len -a $abs -c $cutoff -r $refdb -U 1
   </command>
   <inputs>
     <param name="refdb" type="select" label="Reference 16S database">
@@ -26,19 +26,12 @@ cd ..; /data5/data/NGS-ann-project/NGS-tools/NGS-wf-cd-hit-otu-miseq-run.pl -i N
        <option value="0.005">0.005</option>
     </param>
 
-    <repeat name="group1" title="FASTQ file for sample" max="90" default="1" help="You can add up to 90 samples">
-        <param name="group1_name" size="40" type="text" label="Please enter a unique sample ID" optional="false"/>
-        <param name="group1_inputR1" type="data" format="fastq" label="Fastq file R1"/>
-        <param name="group1_inputR2" type="data" format="fastq" label="Fastq file R2"/>
-    </repeat>
-
+    <param name="sample_txt" type="text" area="true" size="15x60" label="Sample_ID SRA(or URL) for sequence data, one sample per line" optional="false"/>
   </inputs>
 
   <configfiles>
     <configfile name="config_f" filename="NGS-samples">
-#for $i, $s in enumerate( $group1)
-${s.group1_name} ${s.group1_inputR1.file_name} ${s.group1_inputR2.file_name}
-#end for
+$sample_txt
     </configfile>
   </configfiles>
 
@@ -62,16 +55,23 @@ For each sample, the workflow run the following process:
 
 All samples will be pooled and will be clustering into OTUs
 
-Upload
-------
-    Please use Get_Data -> Upload_file on the tool panel to upload your fastq files.
-    Uploaded files will appear at right column. 
-
 Input
 -----
-    1. PE fastq files (2 files) for each sample
-       click button "+ Insert FASTQ file for sample" to add a new sample
-       You must give a unique sample name to each sample
+In the text block, enter the Sample_ID, SRA or URL for sequence data, one sample per line.
+
+Example using SRA:
+::
+
+    mock1 SRR2914393
+    mock2 SRR2914394
+    mock3 SRR2914395
+
+Example using URL, ftp:// and http:// are allowed, .gz files are allowed:
+::
+
+    mock1 http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914393_1.fastq.gz http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914393_2.fastq.gz
+    mock2 http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914394_1.fastq.gz http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914394_2.fastq.gz
+    mock3 http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914395_1.fastq.gz http://weizhong-lab.ucsd.edu/download-data/cd-hit-otu-miseq/SRR2914395_2.fastq.gz
 
 Output
 ------

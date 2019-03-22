@@ -56,10 +56,15 @@ if ($refdb eq "SILVA") {
   $gg_path = "/data5/data/NGS-ann-project/refs/silva/SILVA_132_SSURef_processed.fasta";
 }
 $cmd = `env > NGS-env`;
-$cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
-$cmd = `mv -f $sample_file.1 $sample_file`;
 $cmd = `sed -i "s/__cn__/\\n/g" $sample_file`; #### for text area input, galaxy changed \n to __cn__, change it back
+$cmd = `grep -P "^\\w" $sample_file > $sample_file.1`;
+$cmd = `mv -f $sample_file.1 $sample_file`;
 $cmd = `sed -i "s/^/Sample_/" $sample_file`;
+
+#$cmd = `grep -P "\\w" $sample_file > $sample_file.1`;
+#$cmd = `mv -f $sample_file.1 $sample_file`;
+#$cmd = `sed -i "s/__cn__/\\n/g" $sample_file`; #### for text area input, galaxy changed \n to __cn__, change it back
+#$cmd = `sed -i "s/^/Sample_/" $sample_file`;
 
 #################### copy to www
 $cmd = `mkdir -p $www_dir/$job_id`;
@@ -237,8 +242,11 @@ sub fetch_data {
            (($lls[1] =~ /^https:/) and ($lls[2] =~ /^https:/)) ) {
       my $r1 = "$p/$lls[0]-R1.fastq";      
       my $r2 = "$p/$lls[0]-R2.fastq";      
-      $cmd = `wget -O $r1 $lls[1]`;
-      $cmd = `wget -O $r2 $lls[2]`;
+      if ($lls[1] =~ /.gz$/) { $cmd = `wget -O $r1.gz $lls[1]`; $cmd = `gunzip -f $r1.gz`; }
+      else                   { $cmd = `wget -O $r1    $lls[1]`; }
+      if ($lls[2] =~ /.gz$/) { $cmd = `wget -O $r2.gz $lls[2]`; $cmd = `gunzip -f $r2.gz`; }
+      else                   { $cmd = `wget -O $r2    $lls[2]`; }
+
       ((-e $r1) and (-e $r2)) || die "can not download $lls[1] and $lls[2]";
       print OUT "$lls[0]\t$r1\t$r2\n";
     }
