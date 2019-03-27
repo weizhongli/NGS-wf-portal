@@ -54,6 +54,7 @@ my $files_to_save = "NGS* $refdb* Sample* WF-sh *html"; #### a list of files to 
 
 if ($refdb eq "SILVA") {
   $gg_path = "/data5/data/NGS-ann-project/refs/silva/SILVA_132_SSURef_processed.fasta";
+  $gg_path = "/data5/data/NGS-ann-project/refs/silva/qiime/silva_132_99_16S_processed.fna";
 }
 $cmd = `env > NGS-env`;
 $cmd = `sed -i "s/__cn__/\\n/g" $sample_file`; #### for text area input, galaxy changed \n to __cn__, change it back
@@ -85,7 +86,7 @@ if (1) {
 
   #### prepare sliced ref
   my $gg_name = "$refdb-spliced";
-  qsub_n_wait("$cdhit_path/usecases/Miseq-16S/16S-ref-db-PE-splice.pl -i $t_R1 -j $t_R2  -d $gg_path -o $gg_name -p $R1_len -q $R2_len -c 0.99", 4);
+  qsub_n_wait("$cdhit_path/usecases/Miseq-16S/16S-ref-db-PE-splice-cache.pl -i $t_R1 -j $t_R2  -d $gg_path -o $gg_name -p $R1_len -q $R2_len -c 0.99", 4);
   my $pwd = `pwd`; $pwd =~ s/\n//g;
   my $gg_R1 = "$pwd/$gg_name-R1";
   my $gg_R2 = "$pwd/$gg_name-R2";
