@@ -27,6 +27,7 @@ my $abs           = $opts{a}; $abs = 0.0001 unless ($abs >= 0);
 my $cutoff        = $opts{c}; $cutoff = 0.97 unless ($cutoff > 0.9);
 my $refdb         = $opts{r}; $refdb = "Greengene" unless ($refdb);
 my $fetch_data    = $opts{U}; 
+my $down_dir = "URL";
 
 my $job_work_dir  = `pwd`; chop($job_work_dir);
 my ($i, $j, $k, $ll, $cmd);
@@ -101,6 +102,9 @@ else {
 }
 close(LOG);
 
+if ($fetch_data) {
+  $cmd = `rm -rf $down_dir`;
+}
 
 chdir($job_work_dir);
 
@@ -218,7 +222,6 @@ sub fetch_data {
   my $fq_dump_exe = "$sratool_path/fastq-dump";
 
   my ($i, $j, $k, $ll, $cmd, $p);
-  my $down_dir = "URL";
   $cmd = `mkdir $down_dir`;
   $p = `pwd -P $down_dir`; chop($p);
   $p = "$p/$down_dir";
